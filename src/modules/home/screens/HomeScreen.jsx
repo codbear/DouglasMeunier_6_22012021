@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core';
 
 import Banner from '../../banner';
 import PhotographerCard from '../../photographers';
-import Data from '../../../sdk/FishEyeDataFR.json';
+import photographersHelper from '../../../sdk/helpers';
 
 const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
   header: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 
 const HomeScreen = () => {
   const classes = useStyles();
-  const { photographers } = Data;
+  const photographers = photographersHelper.list();
 
   return (
     <>
