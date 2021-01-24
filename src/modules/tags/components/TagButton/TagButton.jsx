@@ -10,7 +10,7 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
   root: {
     cursor: 'pointer',
     backgroundColor: palette.background.paper,
-    border: '1px solid #c4c4c4',
+    border: `1px solid ${palette.border}`,
     borderRadius: 11,
     padding: '3px 6px',
     color: palette.text.primary,

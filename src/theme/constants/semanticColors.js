@@ -21,6 +21,7 @@ const semanticColors = {
     onPrimary: colors.white,
   },
   shadow: colors.paleCoal,
+  border: colors.alto,
 };
 
 export default semanticColors;
