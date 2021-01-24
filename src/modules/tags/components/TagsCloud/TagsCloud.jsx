@@ -11,6 +11,7 @@ const propTypes = {
 const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
+    flexFlow: 'row wrap',
     justifyContent: 'center',
   },
 }));

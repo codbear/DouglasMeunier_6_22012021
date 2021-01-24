@@ -3,26 +3,38 @@ import { makeStyles } from '@material-ui/core';
 
 import Banner from '../../banner';
 import PhotographerCard from '../../photographers';
-import photographersHelper from '../../../sdk/helpers';
+import { photographersHelper, tagsHelper } from '../../../sdk/helpers';
 
 const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
   header: {
     position: 'absolute',
-    top: spacing(5),
-    left: spacing(15),
-    [breakpoints.down('sm')]: {
-      left: spacing(2),
+    top: 0,
+    left: 0,
+    right: 0,
+  },
+  titleGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: spacing(5, 1),
+    alignItems: 'center',
+    justifyItems: 'center',
+    marginTop: spacing(5),
+    [breakpoints.up('md')]: {
+      gridTemplateColumns: '1fr 1fr 1fr',
+    },
+    [breakpoints.up('lg')]: {
+      gridTemplateColumns: '1fr 2fr 1fr',
     },
   },
   title: {
-    textAlign: 'right',
-    margin: spacing(5, 15, 0, 0),
+    gridColumn: 2,
     ...typography.h4,
     lineHeight: '50px',
+    [breakpoints.up('md')]: {
+      gridColumn: 3,
+    },
     [breakpoints.down('sm')]: {
-      marginRight: spacing(2),
       ...typography.h6,
-      lineHeight: '37.5px',
     },
   },
   photographers: {
@@ -40,14 +52,17 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 const HomeScreen = () => {
   const classes = useStyles();
   const photographers = photographersHelper.list();
+  const tags = tagsHelper.list();
 
   return (
     <>
       <header className={classes.header}>
-        <Banner />
+        <Banner tags={tags} />
       </header>
       <main>
-        <h1 className={classes.title}>Nos photographes</h1>
+        <div className={classes.titleGrid}>
+          <h1 className={classes.title}>Nos photographes</h1>
+        </div>
         <div className={classes.photographers}>
           {photographers.map((photographer) => (
             <PhotographerCard photographer={photographer} key={photographer.id} />

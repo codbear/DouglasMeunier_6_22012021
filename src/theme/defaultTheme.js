@@ -12,6 +12,7 @@ const defaultTheme = createMuiTheme({
   breakpoints: {
     values: {
       md: 900,
+      lg: 1280,
     },
   },
   overrides: {
