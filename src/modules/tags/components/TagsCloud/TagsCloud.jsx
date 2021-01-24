@@ -21,7 +21,7 @@ const TagsCloud = ({ tags }) => {
   return (
     <div className={classes.root}>
       { tags.map((tag) => (
-        <TagButton label={tag} />
+        <TagButton label={tag} key={tag} />
       )) }
     </div>
   );
