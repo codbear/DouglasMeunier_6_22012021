@@ -8,6 +8,7 @@ const semanticColors = {
     main: colors.romantic,
   },
   background: {
+    primary: colors.sangria,
     secondary: colors.romantic,
     alternative: colors.whiteSmoke,
     paper: colors.white,
@@ -19,6 +20,7 @@ const semanticColors = {
     alternative: colors.emperor,
     onPrimary: colors.white,
   },
+  shadow: colors.paleCoal,
 };
 
 export default semanticColors;

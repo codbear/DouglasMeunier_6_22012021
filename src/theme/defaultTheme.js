@@ -9,6 +9,19 @@ const defaultTheme = createMuiTheme({
       'sans-serif',
     ].join(', '),
   },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '*': {
+          margin: 0,
+          padding: 0,
+        },
+        a: {
+          textDecoration: 'none',
+        },
+      },
+    },
+  },
 });
 
 export default defaultTheme;
