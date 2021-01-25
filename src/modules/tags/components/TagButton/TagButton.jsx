@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { makeStyles } from '@material-ui/core';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
+  isActive: PropTypes.bool.isRequired,
 };
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -25,14 +27,19 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
   },
 }));
 
-const TagButton = ({ label }) => {
+const TagButton = ({ label, isActive }) => {
   const classes = useStyles();
   const formattedLabel = `#${label[0].toUpperCase()}${label.slice(1)}`;
 
   return (
     <button
       type="button"
-      className={classes.root}
+      className={classNames(
+        classes.root,
+        {
+          [classes.isActive]: isActive,
+        },
+      )}
     >
       { formattedLabel }
     </button>

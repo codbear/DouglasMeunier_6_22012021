@@ -21,6 +21,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "globals": {
+      "window": true
+    },
     "extends": [
       "airbnb",
       "airbnb/hooks"

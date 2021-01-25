@@ -7,10 +7,12 @@ import TagsCloud from '../../../tags';
 
 const propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
+  activeTags: PropTypes.arrayOf(PropTypes.string),
 };
 
 const defaultProps = {
-  tags: null,
+  tags: [],
+  activeTags: [],
 };
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
@@ -43,7 +45,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
 }));
 
-const Banner = ({ tags }) => {
+const Banner = ({ tags, activeTags }) => {
   const classes = useStyles();
 
   return (
@@ -53,7 +55,7 @@ const Banner = ({ tags }) => {
       </a>
       {tags && (
         <div className={classes.nav}>
-          <TagsCloud tags={tags} />
+          <TagsCloud tags={tags} activeTags={activeTags} />
         </div>
       )}
     </div>

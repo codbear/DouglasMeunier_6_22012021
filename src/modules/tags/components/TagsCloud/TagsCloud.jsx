@@ -6,6 +6,11 @@ import TagButton from '../TagButton';
 
 const propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activeTags: PropTypes.arrayOf(PropTypes.string),
+};
+
+const defaultProps = {
+  activeTags: [],
 };
 
 const useStyles = makeStyles(() => ({
@@ -16,18 +21,23 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const TagsCloud = ({ tags }) => {
+const TagsCloud = ({ tags, activeTags }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      { tags.map((tag) => (
-        <TagButton label={tag} key={tag} />
-      )) }
+      { tags.map((tag) => {
+        const isActive = activeTags.includes(tag);
+
+        return (
+          <TagButton label={tag} isActive={isActive} key={tag} />
+        );
+      })}
     </div>
   );
 };
 
 TagsCloud.propTypes = propTypes;
+TagsCloud.defaultProps = defaultProps;
 
 export default TagsCloud;

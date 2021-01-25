@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import Banner from '../../banner';
 import PhotographerCard from '../../photographers';
 import { photographersHelper, tagsHelper } from '../../../sdk/helpers';
+import getQueryParams from '../../../services';
 
 const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
   header: {
@@ -53,11 +54,12 @@ const HomeScreen = () => {
   const classes = useStyles();
   const photographers = photographersHelper.list();
   const tags = tagsHelper.list();
+  const queryParams = getQueryParams();
 
   return (
     <>
       <header className={classes.header}>
-        <Banner tags={tags} />
+        <Banner tags={tags} activeTags={queryParams?.search} />
       </header>
       <main>
         <div className={classes.titleGrid}>
