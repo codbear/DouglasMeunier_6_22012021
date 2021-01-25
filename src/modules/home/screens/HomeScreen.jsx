@@ -53,13 +53,12 @@ const HomeScreen = () => {
   const classes = useStyles();
   const activeTags = useListActiveTags();
   const { isSuccess: isPhotographersRequestSuccess, photographers } = useListPhotographers();
-  const { isSuccess: isTagsRequestSuccess, tagsList } = useListTags();
+  const { tagsList } = useListTags();
 
   return (
     <>
       <header className={classes.header}>
         <Banner
-          isNavActive={isTagsRequestSuccess}
           tags={tagsList}
           activeTags={activeTags}
         />
