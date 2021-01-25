@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core';
 
 import Banner from '../../banner';
 import PhotographerCard from '../../photographers';
-import { photographersHelper, tagsHelper } from '../../../sdk/helpers';
-import getQueryParams from '../../../services';
+import { useListPhotographers, useListTags, useListActiveTags } from '../../../sdk/helpers';
 
 const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
   header: {
@@ -52,24 +51,30 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 
 const HomeScreen = () => {
   const classes = useStyles();
-  const photographers = photographersHelper.list();
-  const tags = tagsHelper.list();
-  const queryParams = getQueryParams();
+  const activeTags = useListActiveTags();
+  const { isSuccess: isPhotographersRequestSuccess, photographers } = useListPhotographers();
+  const { isSuccess: isTagsRequestSuccess, tagsList } = useListTags();
 
   return (
     <>
       <header className={classes.header}>
-        <Banner tags={tags} activeTags={queryParams?.search} />
+        <Banner
+          isNavActive={isTagsRequestSuccess}
+          tags={tagsList}
+          activeTags={activeTags}
+        />
       </header>
       <main>
         <div className={classes.titleGrid}>
           <h1 className={classes.title}>Nos photographes</h1>
         </div>
-        <div className={classes.photographers}>
-          {photographers.map((photographer) => (
-            <PhotographerCard photographer={photographer} key={photographer.id} />
-          ))}
-        </div>
+        {isPhotographersRequestSuccess && (
+          <div className={classes.photographers}>
+            {photographers.map((photographer) => (
+              <PhotographerCard photographer={photographer} key={photographer.id} />
+            ))}
+          </div>
+        )}
       </main>
     </>
   );

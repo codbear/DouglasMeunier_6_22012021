@@ -1,19 +1,27 @@
-import Data from '../api/FishEyeDataFR.json';
+import useGetData from '../api/clientApi';
+import getQueryParams from '../../services';
 
-const tagsHelper = {
-  list: () => {
-    const tagsList = [];
+export const list = () => {
+  const {
+    isSuccess,
+    data,
+  } = useGetData();
 
-    Data.photographers.forEach((photographer) => {
-      photographer.tags.forEach((tag) => {
-        if (!tagsList.includes(tag)) {
-          tagsList.push(tag);
-        }
-      });
+  const tagsList = [];
+
+  data?.photographers.forEach((photographer) => {
+    photographer.tags.forEach((tag) => {
+      if (!tagsList.includes(tag)) {
+        tagsList.push(tag);
+      }
     });
+  });
 
-    return tagsList;
-  },
+  return { isSuccess, tagsList };
 };
 
-export default tagsHelper;
+export const listActiveTags = () => {
+  const queryParams = getQueryParams();
+
+  return queryParams?.tags;
+}

@@ -6,11 +6,13 @@ import logo from '../../images/logo.svg';
 import TagsCloud from '../../../tags';
 
 const propTypes = {
+  isNavActive: PropTypes.bool,
   tags: PropTypes.arrayOf(PropTypes.string),
   activeTags: PropTypes.arrayOf(PropTypes.string),
 };
 
 const defaultProps = {
+  isNavActive: false,
   tags: [],
   activeTags: [],
 };
@@ -45,7 +47,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
 }));
 
-const Banner = ({ tags, activeTags }) => {
+const Banner = ({ tags, activeTags, isNavActive }) => {
   const classes = useStyles();
 
   return (
@@ -53,7 +55,7 @@ const Banner = ({ tags, activeTags }) => {
       <a href="/">
         <img src={logo} alt="Fisheye Home page" className={classes.logo} />
       </a>
-      {tags && (
+      {isNavActive && (
         <div className={classes.nav}>
           <TagsCloud tags={tags} activeTags={activeTags} />
         </div>

@@ -1,8 +1,23 @@
-import Data from '../api/FishEyeDataFR.json';
+import useGetData from '../api/clientApi';
 
-const photographersHelper = {
-  list: () => Data.photographers,
-  get: (id) => Data.photographers.find((photographer) => photographer.id === id),
+export const list = () => {
+  const {
+    isSuccess,
+    data,
+  } = useGetData();
+
+  const photographers = data?.photographers;
+
+  return { isSuccess, photographers };
 };
 
-export default photographersHelper;
+export const get = (id) => {
+  const {
+    isSuccess,
+    data,
+  } = useGetData();
+
+  const photographer = data?.photographers.find((elem) => elem.id === id);
+
+  return { isSuccess, photographer };
+};
