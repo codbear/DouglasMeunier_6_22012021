@@ -1,8 +1,8 @@
 export {
-  list as useListPhotographers,
-  get as useGetPhotographer,
+  useList as useListPhotographers,
+  useGet as useGetPhotographer,
 } from './photographersHelper';
 export {
-  list as useListTags,
-  listActiveTags as useListActiveTags,
+  useList as useListTags,
+  useListActiveTags,
 } from './tagsHelper';

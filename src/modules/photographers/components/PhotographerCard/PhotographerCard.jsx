@@ -17,6 +17,7 @@ const propTypes = {
     price: PropTypes.number.isRequired,
     portrait: PropTypes.string.isRequired,
   }).isRequired,
+  onClickOnTag: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles(({ palette, typography }) => ({
@@ -34,7 +35,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-const PhotographerCard = ({ photographer }) => {
+const PhotographerCard = ({ photographer, onClickOnTag }) => {
   const classes = useStyles();
   const {
     name,
@@ -60,7 +61,7 @@ const PhotographerCard = ({ photographer }) => {
         tagline={tagline}
         name={name}
       />
-      <TagsCloud tags={tags} />
+      <TagsCloud tags={tags} onClickOnTag={onClickOnTag} />
     </article>
   );
 };

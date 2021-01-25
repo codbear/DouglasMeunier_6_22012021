@@ -1,6 +1,6 @@
 import useGetData from '../api/clientApi';
 
-export const list = () => {
+export const useList = () => {
   const {
     isSuccess,
     data,
@@ -11,7 +11,7 @@ export const list = () => {
   return { isSuccess, photographers };
 };
 
-export const get = (id) => {
+export const useGet = (id) => {
   const {
     isSuccess,
     data,

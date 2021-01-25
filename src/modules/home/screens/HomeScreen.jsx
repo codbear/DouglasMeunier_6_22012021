@@ -3,7 +3,11 @@ import { makeStyles } from '@material-ui/core';
 
 import Banner from '../../banner';
 import PhotographerCard from '../../photographers';
-import { useListPhotographers, useListTags, useListActiveTags } from '../../../sdk/helpers';
+import {
+  useListPhotographers,
+  useListTags,
+  useListActiveTags,
+} from '../../../sdk/helpers';
 
 const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
   header: {
@@ -51,9 +55,23 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 
 const HomeScreen = () => {
   const classes = useStyles();
-  const activeTags = useListActiveTags();
+  const { activeTags } = useListActiveTags();
   const { isSuccess: isPhotographersRequestSuccess, photographers } = useListPhotographers();
   const { tagsList } = useListTags();
+
+  const handleClickOnTag = ({ label, isActive }) => {
+    if (isActive) {
+      activeTags.splice(activeTags.indexOf(label), 1);
+    } else {
+      activeTags.push(label);
+    }
+
+    if (activeTags.length > 0) {
+      window.location.search = `tags=${activeTags.join('+')}`;
+    } else {
+      window.location.href = '/';
+    }
+  };
 
   return (
     <>
@@ -61,6 +79,7 @@ const HomeScreen = () => {
         <Banner
           tags={tagsList}
           activeTags={activeTags}
+          onClickOnTag={handleClickOnTag}
         />
       </header>
       <main>
@@ -70,7 +89,11 @@ const HomeScreen = () => {
         {isPhotographersRequestSuccess && (
           <div className={classes.photographers}>
             {photographers.map((photographer) => (
-              <PhotographerCard photographer={photographer} key={photographer.id} />
+              <PhotographerCard
+                photographer={photographer}
+                key={photographer.id}
+                onClickOnTag={handleClickOnTag}
+              />
             ))}
           </div>
         )}

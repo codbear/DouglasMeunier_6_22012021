@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core';
 const propTypes = {
   label: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -27,9 +28,16 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
   },
 }));
 
-const TagButton = ({ label, isActive }) => {
+const TagButton = ({ label, isActive, onClick }) => {
   const classes = useStyles();
   const formattedLabel = `#${label[0].toUpperCase()}${label.slice(1)}`;
+
+  const handleClick = () => {
+    onClick({
+      label,
+      isActive,
+    });
+  };
 
   return (
     <button
@@ -40,6 +48,7 @@ const TagButton = ({ label, isActive }) => {
           [classes.isActive]: isActive,
         },
       )}
+      onClick={handleClick}
     >
       { formattedLabel }
     </button>
