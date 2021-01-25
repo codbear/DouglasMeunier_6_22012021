@@ -56,7 +56,10 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 const HomeScreen = () => {
   const classes = useStyles();
   const { activeTags } = useListActiveTags();
-  const { isSuccess: isPhotographersRequestSuccess, photographers } = useListPhotographers();
+  const {
+    isSuccess: isPhotographersRequestSuccess,
+    photographers,
+  } = useListPhotographers(activeTags);
   const { tagsList } = useListTags();
 
   const handleClickOnTag = ({ label, isActive }) => {
