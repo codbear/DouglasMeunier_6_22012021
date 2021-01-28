@@ -7,12 +7,10 @@ import TagButton from '../TagButton';
 const propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
   activeTags: PropTypes.arrayOf(PropTypes.string),
-  onClickOnTag: PropTypes.func,
 };
 
 const defaultProps = {
   activeTags: [],
-  onClickOnTag: () => {},
 };
 
 const useStyles = makeStyles(() => ({
@@ -23,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const TagsCloud = ({ tags, activeTags, onClickOnTag }) => {
+const TagsCloud = ({ tags, activeTags }) => {
   const classes = useStyles();
 
   return (
@@ -32,7 +30,7 @@ const TagsCloud = ({ tags, activeTags, onClickOnTag }) => {
         const isActive = activeTags.includes(tag);
 
         return (
-          <TagButton label={tag} isActive={isActive} key={tag} onClick={onClickOnTag} />
+          <TagButton label={tag} isActive={isActive} key={tag} />
         );
       })}
     </div>

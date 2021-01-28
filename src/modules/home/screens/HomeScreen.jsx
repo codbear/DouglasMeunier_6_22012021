@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
 
@@ -57,7 +56,6 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 
 const HomeScreen = () => {
   const classes = useStyles();
-  const history = useHistory();
   const activeTags = useQueryParams().get('tags')?.split(' ') || [];
   const { tagsList } = useListTags();
   const {
@@ -65,27 +63,12 @@ const HomeScreen = () => {
     photographers,
   } = useListPhotographers(activeTags);
 
-  const handleClickOnTag = ({ label, isActive }) => {
-    if (isActive) {
-      activeTags.splice(activeTags.indexOf(label), 1);
-    } else {
-      activeTags.push(label);
-    }
-
-    if (activeTags.length > 0) {
-      history.push(`/?tags=${activeTags.join('+')}`);
-    } else {
-      history.push('/');
-    }
-  };
-
   return (
     <>
       <header className={classes.header}>
         <Banner
           tags={tagsList}
           activeTags={activeTags}
-          onClickOnTag={handleClickOnTag}
         />
       </header>
       <main>
@@ -98,7 +81,6 @@ const HomeScreen = () => {
               <PhotographerCard
                 photographer={photographer}
                 key={photographer.id}
-                onClickOnTag={handleClickOnTag}
               />
             ))}
           </div>

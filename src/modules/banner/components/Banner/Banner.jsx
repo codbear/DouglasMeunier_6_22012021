@@ -10,13 +10,11 @@ import TagsCloud from '../../../tags';
 const propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
   activeTags: PropTypes.arrayOf(PropTypes.string),
-  onClickOnTag: PropTypes.func,
 };
 
 const defaultProps = {
   tags: [],
   activeTags: [],
-  onClickOnTag: () => {},
 };
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
