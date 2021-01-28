@@ -4,7 +4,7 @@ export const useList = (activeTags) => {
   const {
     isSuccess,
     data,
-  } = useGetData();
+  } = useGetData('photographers');
 
   const photographers = activeTags.length > 0
     ? data?.photographers.filter((photographer) => (
@@ -19,7 +19,7 @@ export const useGet = (id) => {
   const {
     isSuccess,
     data,
-  } = useGetData();
+  } = useGetData(['photographer', id]);
 
   const photographer = data?.photographers.find((elem) => elem.id === id);
 

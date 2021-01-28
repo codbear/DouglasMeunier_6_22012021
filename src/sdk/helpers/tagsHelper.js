@@ -5,7 +5,7 @@ export const useList = () => {
   const {
     isSuccess,
     data,
-  } = useGetData();
+  } = useGetData('tags');
 
   const tagsList = [];
 

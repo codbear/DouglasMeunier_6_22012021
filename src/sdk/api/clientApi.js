@@ -14,6 +14,6 @@ const request = async () => {
   return response.json();
 };
 
-const useGetData = () => useQuery('data', request);
+const useGetData = (queryKey) => useQuery(queryKey, request);
 
 export default useGetData;
