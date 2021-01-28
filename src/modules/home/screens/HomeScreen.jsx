@@ -1,13 +1,15 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core';
 
-import Banner from '../../banner';
-import PhotographerCard from '../../photographers';
 import {
   useListPhotographers,
   useListTags,
-  useListActiveTags,
 } from '../../../sdk/helpers';
+import Banner from '../../banner';
+import PhotographerCard from '../../photographers';
+import useQueryParams from '../hooks';
 
 const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
   header: {
@@ -55,12 +57,13 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 
 const HomeScreen = () => {
   const classes = useStyles();
-  const { activeTags } = useListActiveTags();
+  const history = useHistory();
+  const activeTags = useQueryParams().get('tags')?.split(' ') || [];
+  const { tagsList } = useListTags();
   const {
     isSuccess: isPhotographersRequestSuccess,
     photographers,
   } = useListPhotographers(activeTags);
-  const { tagsList } = useListTags();
 
   const handleClickOnTag = ({ label, isActive }) => {
     if (isActive) {
@@ -70,9 +73,9 @@ const HomeScreen = () => {
     }
 
     if (activeTags.length > 0) {
-      window.location.search = `tags=${activeTags.join('+')}`;
+      history.push(`/?tags=${activeTags.join('+')}`);
     } else {
-      window.location.href = '/';
+      history.push('/');
     }
   };
 
