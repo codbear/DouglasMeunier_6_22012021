@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { makeStyles } from '@material-ui/core';
+
 import PhotographerAvatar from '../PhotographerAvatar';
 import PhotographerInfo from '../PhotographerInfo';
-
 import TagsCloud from '../../../tags';
 
 const propTypes = {
@@ -50,10 +52,10 @@ const PhotographerCard = ({ photographer, onClickOnTag }) => {
 
   return (
     <article className={classes.root}>
-      <a href={`/photographers?id=${id}`} className={classes.link}>
+      <RouterLink to={`/photographers/${id}`} className={classes.link}>
         <PhotographerAvatar id={243} name={name} filename={portrait} />
         <h2 className={classes.name}>{ name }</h2>
-      </a>
+      </RouterLink>
       <PhotographerInfo
         city={city}
         price={price}

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core';
 
 import logo from '../../images/logo.svg';
@@ -52,9 +54,9 @@ const Banner = ({ tags, activeTags, onClickOnTag }) => {
 
   return (
     <div className={classes.banner}>
-      <a href="/">
+      <RouterLink to="/">
         <img src={logo} alt="Fisheye Home page" className={classes.logo} />
-      </a>
+      </RouterLink>
       {tags.length > 0 && (
         <div className={classes.nav}>
           <TagsCloud tags={tags} activeTags={activeTags} onClickOnTag={onClickOnTag} />
