@@ -29,7 +29,14 @@
     "extends": [
       "airbnb",
       "airbnb/hooks"
-    ]
+    ],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": ["src"]
+        }
+      }
+    }
   },
   "browserslist": {
     "production": [

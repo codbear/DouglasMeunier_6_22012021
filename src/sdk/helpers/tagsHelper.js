@@ -1,6 +1,6 @@
 import useGetData from '../api/clientApi';
 
-export const useList = () => {
+const useList = () => {
   const {
     isSuccess,
     data,
@@ -18,3 +18,5 @@ export const useList = () => {
 
   return { isSuccess, tagsList };
 };
+
+export default useList;

@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 
 import defaultTheme from './theme/defaultTheme';
-import ReactRouter from './modules/router';
+import ReactRouter from './Modules/router';
 
 const queryClient = new QueryClient();
 

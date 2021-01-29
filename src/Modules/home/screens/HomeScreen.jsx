@@ -5,9 +5,11 @@ import { makeStyles } from '@material-ui/core';
 import {
   useListPhotographers,
   useListTags,
-} from '../../../sdk/helpers';
-import Banner from '../../banner';
-import PhotographerCard from '../../photographers';
+} from 'sdk/helpers';
+
+import Banner from 'Modules/banner';
+import PhotographerCard from 'Modules/photographers';
+
 import useQueryParams from '../hooks';
 
 const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({

@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import { makeStyles } from '@material-ui/core';
-import useQueryParams from '../../../home/hooks';
-import { ROUTES } from '../../../router';
+
+import useQueryParams from 'Modules/home/hooks';
+import { ROUTES } from 'Modules/router';
 
 const propTypes = {
   label: PropTypes.string.isRequired,

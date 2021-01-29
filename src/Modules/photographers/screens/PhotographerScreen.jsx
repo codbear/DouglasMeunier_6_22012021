@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
 
-import Banner from '../../banner';
+import Banner from 'Modules/banner';
 
 const useStyles = makeStyles(() => ({
   header: {

@@ -4,10 +4,10 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
 
-import { ROUTES } from '../../../router/index';
+import { ROUTES } from 'Modules/router';
+import TagsCloud from 'Modules/tags';
 
 import logo from '../../images/logo.svg';
-import TagsCloud from '../../../tags';
 
 const propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),

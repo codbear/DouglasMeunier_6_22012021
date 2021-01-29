@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core';
 
-import { ROUTES } from '../../../router';
+import { ROUTES } from 'Modules/router';
+import TagsCloud from 'Modules/tags';
+
 import PhotographerAvatar from '../PhotographerAvatar';
 import PhotographerInfo from '../PhotographerInfo';
-import TagsCloud from '../../../tags';
 
 const propTypes = {
   photographer: PropTypes.shape({
