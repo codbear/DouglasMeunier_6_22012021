@@ -5,10 +5,11 @@ import classNames from 'classnames';
 
 import { makeStyles } from '@material-ui/core';
 import useQueryParams from '../../../home/hooks';
+import { ROUTES } from '../../../router';
 
 const propTypes = {
   label: PropTypes.string.isRequired,
-  isActive: PropTypes.bool.isRequired,
+  shouldHighlightWhenActive: PropTypes.bool.isRequired,
 };
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -17,12 +18,11 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     backgroundColor: palette.background.paper,
     border: `1px solid ${palette.border}`,
     borderRadius: 11,
+    marginBottom: spacing(0.5),
     padding: '3px 6px',
     color: palette.text.primary,
     fontWeight: 500,
-    '&:not(:last-child)': {
-      marginRight: spacing(1),
-    },
+    marginRight: spacing(1),
   },
   isActive: {
     backgroundColor: palette.background.primary,
@@ -30,23 +30,22 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
   },
 }));
 
-const TagButton = ({ label, isActive }) => {
+const TagButton = ({ label, shouldHighlightWhenActive }) => {
   const classes = useStyles();
   const formattedLabel = `#${label[0].toUpperCase()}${label.slice(1)}`;
   const activeTags = useQueryParams().get('tags')?.split(' ') || [];
-  let targetUrl = `/?tags=${label}`;
+  const isActive = activeTags.includes(label);
+  let targetUrl = `${ROUTES.HOMEPAGE.INDEX}?tags=${label}`;
 
   if (isActive) {
-    if (activeTags.length === 1) {
-      targetUrl = '/';
-    }
+    targetUrl = ROUTES.HOMEPAGE.INDEX;
 
     if (activeTags.length > 1) {
       activeTags.splice(activeTags.indexOf(label), 1);
-      targetUrl = `/?tags=${activeTags.join('+')}`;
+      targetUrl = `${ROUTES.HOMEPAGE.INDEX}?tags=${activeTags.join('+')}`;
     }
   } else if (activeTags.length > 0) {
-    targetUrl = `/?tags=${activeTags.join('+')}+${label}`;
+    targetUrl = `${ROUTES.HOMEPAGE.INDEX}?tags=${activeTags.join('+')}+${label}`;
   }
 
   return (
@@ -55,7 +54,7 @@ const TagButton = ({ label, isActive }) => {
       className={classNames(
         classes.root,
         {
-          [classes.isActive]: isActive,
+          [classes.isActive]: isActive && shouldHighlightWhenActive,
         },
       )}
     >

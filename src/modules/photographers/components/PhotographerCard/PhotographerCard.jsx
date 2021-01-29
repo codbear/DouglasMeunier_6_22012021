@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, generatePath } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core';
 
+import { ROUTES } from '../../../router';
 import PhotographerAvatar from '../PhotographerAvatar';
 import PhotographerInfo from '../PhotographerInfo';
 import TagsCloud from '../../../tags';
@@ -48,10 +49,11 @@ const PhotographerCard = ({ photographer }) => {
     price,
     portrait,
   } = photographer;
+  const targetUrl = generatePath(ROUTES.PHOTOGRAPHERS.SINGLE, { id });
 
   return (
     <article className={classes.root}>
-      <RouterLink to={`/photographers/${id}`} className={classes.link}>
+      <RouterLink to={targetUrl} className={classes.link}>
         <PhotographerAvatar id={243} name={name} filename={portrait} />
         <h2 className={classes.name}>{ name }</h2>
       </RouterLink>

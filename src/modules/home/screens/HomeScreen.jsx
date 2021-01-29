@@ -68,7 +68,6 @@ const HomeScreen = () => {
       <header className={classes.header}>
         <Banner
           tags={tagsList}
-          activeTags={activeTags}
         />
       </header>
       <main>

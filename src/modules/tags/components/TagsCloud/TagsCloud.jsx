@@ -6,11 +6,11 @@ import TagButton from '../TagButton';
 
 const propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activeTags: PropTypes.arrayOf(PropTypes.string),
+  shouldHighlightActiveTags: PropTypes.bool,
 };
 
 const defaultProps = {
-  activeTags: [],
+  shouldHighlightActiveTags: false,
 };
 
 const useStyles = makeStyles(() => ({
@@ -21,18 +21,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const TagsCloud = ({ tags, activeTags }) => {
+const TagsCloud = ({ tags, shouldHighlightActiveTags }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      { tags.map((tag) => {
-        const isActive = activeTags.includes(tag);
-
-        return (
-          <TagButton label={tag} isActive={isActive} key={tag} />
-        );
-      })}
+      { tags.map((tag) => (
+        <TagButton label={tag} shouldHighlightWhenActive={shouldHighlightActiveTags} key={tag} />
+      ))}
     </div>
   );
 };
