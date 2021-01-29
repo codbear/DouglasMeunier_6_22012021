@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core';
 
+import { ROUTES } from 'Modules/router';
+import useQueryParams from 'Modules/home/hooks';
 import TagButton from '../TagButton';
 
 const propTypes = {
@@ -24,12 +26,29 @@ const useStyles = makeStyles(() => ({
 
 const TagsCloud = ({ tags, shouldHighlightActiveTags }) => {
   const classes = useStyles();
+  const activeTags = useQueryParams().get('tags')?.split(' ') || [];
 
   return (
     <div className={classes.root}>
-      { tags.map((tag) => (
-        <TagButton label={tag} shouldHighlightWhenActive={shouldHighlightActiveTags} key={tag} />
-      ))}
+      { tags.map((tag) => {
+        const isActive = activeTags.includes(tag);
+        const newTags = isActive
+          ? activeTags.filter((activeTag) => activeTag !== tag)
+          : activeTags.concat(tag);
+
+        const targetUrl = newTags.length
+          ? `${ROUTES.HOMEPAGE.INDEX}?tags=${newTags.join('+')}`
+          : ROUTES.HOMEPAGE.INDEX;
+
+        return (
+          <TagButton
+            label={tag}
+            isActive={shouldHighlightActiveTags && isActive}
+            targetUrl={targetUrl}
+            key={tag}
+          />
+        );
+      })}
     </div>
   );
 };

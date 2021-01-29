@@ -5,12 +5,10 @@ import classNames from 'classnames';
 
 import { makeStyles } from '@material-ui/core';
 
-import useQueryParams from 'Modules/home/hooks';
-import { ROUTES } from 'Modules/router';
-
 const propTypes = {
   label: PropTypes.string.isRequired,
-  shouldHighlightWhenActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  targetUrl: PropTypes.string.isRequired,
 };
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -31,23 +29,9 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
   },
 }));
 
-const TagButton = ({ label, shouldHighlightWhenActive }) => {
+const TagButton = ({ label, isActive, targetUrl }) => {
   const classes = useStyles();
   const formattedLabel = `#${label[0].toUpperCase()}${label.slice(1)}`;
-  const activeTags = useQueryParams().get('tags')?.split(' ') || [];
-  const isActive = activeTags.includes(label);
-  let targetUrl = `${ROUTES.HOMEPAGE.INDEX}?tags=${label}`;
-
-  if (isActive) {
-    targetUrl = ROUTES.HOMEPAGE.INDEX;
-
-    if (activeTags.length > 1) {
-      activeTags.splice(activeTags.indexOf(label), 1);
-      targetUrl = `${ROUTES.HOMEPAGE.INDEX}?tags=${activeTags.join('+')}`;
-    }
-  } else if (activeTags.length > 0) {
-    targetUrl = `${ROUTES.HOMEPAGE.INDEX}?tags=${activeTags.join('+')}+${label}`;
-  }
 
   return (
     <RouterLink
@@ -55,7 +39,7 @@ const TagButton = ({ label, shouldHighlightWhenActive }) => {
       className={classNames(
         classes.root,
         {
-          [classes.isActive]: isActive && shouldHighlightWhenActive,
+          [classes.isActive]: isActive,
         },
       )}
     >
