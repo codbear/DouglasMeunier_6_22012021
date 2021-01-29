@@ -1,7 +1,6 @@
 import useGetData from '../api/clientApi';
-import getQueryParams from '../../services';
 
-export const useList = () => {
+const useList = () => {
   const {
     isSuccess,
     data,
@@ -20,9 +19,4 @@ export const useList = () => {
   return { isSuccess, tagsList };
 };
 
-export const useListActiveTags = () => {
-  const queryParams = getQueryParams();
-  const activeTags = queryParams?.tags || [];
-
-  return { activeTags };
-};
+export default useList;
