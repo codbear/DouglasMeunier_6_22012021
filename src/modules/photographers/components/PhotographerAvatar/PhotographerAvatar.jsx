@@ -30,7 +30,7 @@ const PhotographerAvatar = ({
   const classes = useStyles();
 
   return (
-    <img src={`/images/Avatar/${filename}`} alt={alternativeLabel} className={classes.image} />
+    <img src={`/images/Avatar/thumbnails/${filename}`} alt={alternativeLabel} className={classes.image} />
   );
 };
 
