@@ -23,6 +23,9 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "env": {
+      "browser": true
+    },
     "globals": {
       "window": true
     },
