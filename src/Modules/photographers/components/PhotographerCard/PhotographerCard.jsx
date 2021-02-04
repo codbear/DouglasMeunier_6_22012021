@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link as RouterLink, generatePath } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import { makeStyles } from '@material-ui/core';
+
+import { ROUTES } from 'Modules/router';
+import TagsCloud from 'Modules/tags';
+
 import PhotographerAvatar from '../PhotographerAvatar';
 import PhotographerInfo from '../PhotographerInfo';
-
-import TagsCloud from '../../../tags';
 
 const propTypes = {
   photographer: PropTypes.shape({
@@ -17,7 +21,6 @@ const propTypes = {
     price: PropTypes.number.isRequired,
     portrait: PropTypes.string.isRequired,
   }).isRequired,
-  onClickOnTag: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles(({ palette, typography }) => ({
@@ -35,7 +38,7 @@ const useStyles = makeStyles(({ palette, typography }) => ({
   },
 }));
 
-const PhotographerCard = ({ photographer, onClickOnTag }) => {
+const PhotographerCard = ({ photographer }) => {
   const classes = useStyles();
   const {
     name,
@@ -47,13 +50,14 @@ const PhotographerCard = ({ photographer, onClickOnTag }) => {
     price,
     portrait,
   } = photographer;
+  const targetUrl = generatePath(ROUTES.PHOTOGRAPHERS.SINGLE, { id });
 
   return (
     <article className={classes.root}>
-      <a href={`/photographers?id=${id}`} className={classes.link}>
+      <RouterLink to={targetUrl} className={classes.link}>
         <PhotographerAvatar id={243} name={name} filename={portrait} />
         <h2 className={classes.name}>{ name }</h2>
-      </a>
+      </RouterLink>
       <PhotographerInfo
         city={city}
         price={price}
@@ -61,7 +65,7 @@ const PhotographerCard = ({ photographer, onClickOnTag }) => {
         tagline={tagline}
         name={name}
       />
-      <TagsCloud tags={tags} onClickOnTag={onClickOnTag} />
+      <TagsCloud tags={tags} />
     </article>
   );
 };

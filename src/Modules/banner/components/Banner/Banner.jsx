@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core';
 
+import { ROUTES } from 'Modules/router';
+import TagsCloud from 'Modules/tags';
+
 import logo from '../../images/logo.svg';
-import TagsCloud from '../../../tags';
 
 const propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
-  activeTags: PropTypes.arrayOf(PropTypes.string),
-  onClickOnTag: PropTypes.func,
 };
 
 const defaultProps = {
   tags: [],
-  activeTags: [],
-  onClickOnTag: () => {},
 };
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
@@ -47,17 +47,17 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
 }));
 
-const Banner = ({ tags, activeTags, onClickOnTag }) => {
+const Banner = ({ tags }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.banner}>
-      <a href="/">
+      <RouterLink to={ROUTES.HOMEPAGE.INDEX}>
         <img src={logo} alt="Fisheye Home page" className={classes.logo} />
-      </a>
+      </RouterLink>
       {tags.length > 0 && (
         <div className={classes.nav}>
-          <TagsCloud tags={tags} activeTags={activeTags} onClickOnTag={onClickOnTag} />
+          <TagsCloud tags={tags} shouldHighlightActiveTags />
         </div>
       )}
     </div>
