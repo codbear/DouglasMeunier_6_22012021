@@ -3,9 +3,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
 import {
-  useListPhotographers,
-  useListTags,
-} from 'sdk/helpers';
+  useFindPhotographersWithTags,
+  useFindTags,
+} from 'sdk';
 
 import Banner from 'Modules/banner';
 import PhotographerCard from 'Modules/photographers';
@@ -59,17 +59,22 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
 const HomeScreen = () => {
   const classes = useStyles();
   const activeTags = useQueryParams().get('tags')?.split(' ') || [];
-  const { tagsList } = useListTags();
+
+  const {
+    isSuccess: isTagsListRequestSuccess,
+    data: tagsList,
+  } = useFindTags();
+
   const {
     isSuccess: isPhotographersRequestSuccess,
     photographers,
-  } = useListPhotographers(activeTags);
+  } = useFindPhotographersWithTags(activeTags);
 
   return (
     <>
       <header className={classes.header}>
         <Banner
-          tags={tagsList}
+          tags={isTagsListRequestSuccess ? tagsList : []}
         />
       </header>
       <main>
