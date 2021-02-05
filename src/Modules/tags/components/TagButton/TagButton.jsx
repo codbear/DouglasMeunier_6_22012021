@@ -14,18 +14,17 @@ const propTypes = {
 const useStyles = makeStyles(({ palette, spacing }) => ({
   root: {
     cursor: 'pointer',
+    margin: spacing(0, 0.5, 0.5, 0),
     backgroundColor: palette.background.paper,
     border: `1px solid ${palette.border}`,
     borderRadius: 11,
-    marginBottom: spacing(0.5),
     padding: '3px 6px',
-    color: palette.text.primary,
+    color: palette.primary.main,
     fontWeight: 500,
-    marginRight: spacing(1),
   },
   isActive: {
     backgroundColor: palette.background.primary,
-    color: palette.text.onPrimary,
+    color: palette.primary.contrastText,
   },
 }));
 

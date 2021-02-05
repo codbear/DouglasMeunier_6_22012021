@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 
 import {
   useFindPhotographersWithTags,
@@ -35,7 +35,6 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
   },
   title: {
     gridColumn: 2,
-    ...typography.h4,
     lineHeight: '50px',
     [breakpoints.up('md')]: {
       gridColumn: 3,
@@ -49,7 +48,7 @@ const useStyles = makeStyles(({ spacing, typography, breakpoints }) => ({
     gridTemplateColumns: 'repeat(3, 1fr)',
     gap: spacing(7, 0),
     justifyItems: 'center',
-    marginTop: spacing(15),
+    margin: spacing(15, 0, 3, 0),
     [breakpoints.down('sm')]: {
       gridTemplateColumns: '1fr',
     },
@@ -79,7 +78,9 @@ const HomeScreen = () => {
       </header>
       <main>
         <div className={classes.titleGrid}>
-          <h1 className={classes.title}>Nos photographes</h1>
+          <Typography component="h1" variant="h4" color="primary" className={classes.title}>
+            Nos photographes
+          </Typography>
         </div>
         {isPhotographersRequestSuccess && (
           <div className={classes.photographers}>

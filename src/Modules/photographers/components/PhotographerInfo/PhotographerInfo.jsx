@@ -1,53 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 
 const propTypes = {
   city: PropTypes.string.isRequired,
   country: PropTypes.string.isRequired,
   tagline: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  variant: PropTypes.string,
 };
 
-const useStyles = makeStyles(({ palette, typography, spacing }) => ({
+const defaultProps = {
+  variant: 'vertical',
+};
+
+const useStyles = makeStyles(() => ({
   root: {
     textAlign: 'center',
-    marginBottom: spacing(1),
-  },
-  location: {
-    ...typography.body1,
-  },
-  tagline: {
-    color: palette.text.default,
-    ...typography.body2,
-  },
-  price: {
-    color: palette.text.alternative,
-    ...typography.caption,
   },
 }));
 
 const PhotographerInfo = ({
-  city, country, tagline, price,
+  city, country, tagline, price, variant,
 }) => {
   const classes = useStyles();
 
-  return (
+  return variant === 'vertical' ? (
     <div className={classes.root}>
-      <p className={classes.location}>
+      <Typography color="primary">
         { `${city}, ${country}` }
-      </p>
-      <p className={classes.tagline}>
+      </Typography>
+      <Typography variant="body2">
         { tagline }
-      </p>
-      <p className={classes.price}>
+      </Typography>
+      <Typography variant="caption" component="p" color="textSecondary">
         { `${price}€/jour` }
-      </p>
+      </Typography>
+    </div>
+  ) : (
+    <div>
+      <Typography
+        variant="h5"
+        component="p"
+        color="primary"
+        gutterBottom
+      >
+        { `${city}, ${country}` }
+      </Typography>
+      <Typography variant="body1" color="textSecondary" gutterBottom>
+        { tagline }
+      </Typography>
     </div>
   );
 };
 
 PhotographerInfo.propTypes = propTypes;
+PhotographerInfo.defaultProps = defaultProps;
 
 export default PhotographerInfo;
