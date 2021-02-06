@@ -15,7 +15,7 @@ const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
     right: 0,
   },
   main: {
-    marginTop: spacing(20),
+    margin: spacing(20, 0, 9, 0),
   },
   photographerCardContainer: {
     [breakpoints.up('md')]: {
@@ -38,11 +38,13 @@ const PhotographerScreen = () => {
       </header>
       <main className={classes.main}>
         {isSuccess && (
-          <div className={classes.photographerCardContainer}>
-            <PhotographerCardHorizontal
-              photographer={data}
-            />
-          </div>
+          <>
+            <div className={classes.photographerCardContainer}>
+              <PhotographerCardHorizontal
+                photographer={data}
+              />
+            </div>
+          </>
         )}
       </main>
     </>
