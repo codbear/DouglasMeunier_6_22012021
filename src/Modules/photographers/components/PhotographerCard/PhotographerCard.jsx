@@ -1,40 +1,32 @@
 import React from 'react';
 import { Link as RouterLink, generatePath } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 
 import { ROUTES } from 'Modules/router';
 import TagsCloud from 'Modules/tags';
 
+import PhotographerInfo from 'Modules/photographers/components/PhotographerInfo';
 import PhotographerAvatar from '../PhotographerAvatar';
-import PhotographerInfo from '../PhotographerInfo';
+import photographerPropTypes from '../../prop-types/photographerPropTypes';
 
-const propTypes = {
-  photographer: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    city: PropTypes.string.isRequired,
-    country: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    tagline: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    portrait: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-const useStyles = makeStyles(({ palette, typography }) => ({
+const useStyles = makeStyles(() => ({
   root: {
     width: 300,
   },
   link: {
-    display: 'block',
-    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    '& img': {
+      margin: 'auto',
+    },
   },
   name: {
-    color: palette.text.secondary,
     marginTop: 20,
-    ...typography.h4,
+  },
+  tagsCloudContainer: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 }));
 
@@ -56,7 +48,15 @@ const PhotographerCard = ({ photographer }) => {
     <article className={classes.root}>
       <RouterLink to={targetUrl} className={classes.link}>
         <PhotographerAvatar id={243} name={name} filename={portrait} />
-        <h2 className={classes.name}>{ name }</h2>
+        <Typography
+          variant="h4"
+          component="h2"
+          color="secondary"
+          align="center"
+          className={classes.name}
+        >
+          { name }
+        </Typography>
       </RouterLink>
       <PhotographerInfo
         city={city}
@@ -65,11 +65,13 @@ const PhotographerCard = ({ photographer }) => {
         tagline={tagline}
         name={name}
       />
-      <TagsCloud tags={tags} />
+      <div className={classes.tagsCloudContainer}>
+        <TagsCloud tags={tags} />
+      </div>
     </article>
   );
 };
 
-PhotographerCard.propTypes = propTypes;
+PhotographerCard.propTypes = photographerPropTypes;
 
 export default PhotographerCard;

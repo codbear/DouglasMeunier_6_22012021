@@ -4,12 +4,12 @@ const APIMocker = (route, data) => {
   if (resourceType === 'photographers') {
     if (subresourceType === 'medias') {
       return subresourceId
-        ? data.media.find((media) => media.id === subresourceId)
-        : data.media.filter((media) => media.photographerId === resourceId);
+        ? data.media.find((media) => media.id === Number(subresourceId))
+        : data.media.filter((media) => media.photographerId === Number(resourceId));
     }
 
     return resourceId
-      ? data.photographers.find((photographer) => photographer.id === resourceId)
+      ? data.photographers.find((photographer) => photographer.id === Number(resourceId))
       : data.photographers;
   }
 
