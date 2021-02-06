@@ -7,7 +7,7 @@ import Banner from 'Modules/banner';
 import { useGetPhotographer } from 'sdk';
 import PhotographerCardHorizontal from '../components/PhotographerCardHorizontal';
 
-const useStyles = makeStyles(({ spacing }) => ({
+const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
   header: {
     position: 'absolute',
     top: 0,
@@ -18,7 +18,10 @@ const useStyles = makeStyles(({ spacing }) => ({
     marginTop: spacing(20),
   },
   photographerCardContainer: {
-    margin: spacing(0, 12.5),
+    [breakpoints.up('md')]: {
+      backgroundColor: palette.background.alternative,
+      margin: spacing(0, 12.5),
+    },
   },
 }));
 

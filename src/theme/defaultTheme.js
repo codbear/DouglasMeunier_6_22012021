@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core';
 import semanticColors from './constants/semanticColors';
 
 const defaultTheme = createMuiTheme({
@@ -11,7 +11,7 @@ const defaultTheme = createMuiTheme({
   },
   breakpoints: {
     values: {
-      md: 900,
+      md: 980,
       lg: 1280,
     },
   },
@@ -30,4 +30,4 @@ const defaultTheme = createMuiTheme({
   },
 });
 
-export default defaultTheme;
+export default responsiveFontSizes(defaultTheme);
