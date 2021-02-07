@@ -26,3 +26,12 @@ export const useMutateLikes = (photographerId, id) => {
     (action) => request(route, 'PATCH', { action }),
   );
 };
+
+export const useLikesCount = (photographerId) => {
+  const route = `photographers/${photographerId}/likes`;
+
+  return useQuery(
+    ['likes', photographerId],
+    () => request(route),
+  );
+};

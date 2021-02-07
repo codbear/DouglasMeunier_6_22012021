@@ -1,28 +1,44 @@
 import { ACTIONS, METHODS } from 'sdk/constants';
 
+const mergeWithLocalStorage = (mediasFromJSON) => {
+  const medias = [];
+
+  mediasFromJSON.forEach((staticMedia) => {
+    const dynamicMedia = staticMedia;
+
+    try {
+      if (localStorage.getItem(dynamicMedia.id)) {
+        dynamicMedia.likes = Number(localStorage.getItem(dynamicMedia.id));
+      } else {
+        localStorage.setItem(dynamicMedia.id, dynamicMedia.likes);
+      }
+    } finally {
+      medias.push(dynamicMedia);
+    }
+  });
+
+  return medias;
+};
+
 const APIMocker = (route, method, data, body) => {
   const [resourceType, resourceId, subresourceType, subresourceId] = route.split('/');
 
   if (resourceType === 'photographers') {
-    if (subresourceType === 'medias') {
-      const mediasFromJSON = data.media
-        .filter((media) => media.photographerId === Number(resourceId));
-      const medias = [];
+    const mediasFromJSON = data.media
+      .filter((media) => media.photographerId === Number(resourceId));
+    const medias = mergeWithLocalStorage(mediasFromJSON);
 
-      mediasFromJSON.forEach((staticMedia) => {
-        const dynamicMedia = staticMedia;
+    if (subresourceType === 'likes') {
+      let likesCount = 0;
 
-        try {
-          if (localStorage.getItem(dynamicMedia.id)) {
-            dynamicMedia.likes = Number(localStorage.getItem(dynamicMedia.id));
-          } else {
-            localStorage.setItem(dynamicMedia.id, dynamicMedia.likes);
-          }
-        } finally {
-          medias.push(dynamicMedia);
-        }
+      medias.forEach((media) => {
+        likesCount += media.likes;
       });
 
+      return likesCount;
+    }
+
+    if (subresourceType === 'medias') {
       if (subresourceId) {
         const media = medias.find((item) => item.id === Number(subresourceId));
 

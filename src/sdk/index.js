@@ -5,5 +5,7 @@ export {
 export {
   useFind as useFindMedias,
   useGet as useGetMedia,
+  useMutateLikes,
+  useLikesCount,
 } from './hooks/medias';
 export { default as useFindTags } from './hooks/tags';

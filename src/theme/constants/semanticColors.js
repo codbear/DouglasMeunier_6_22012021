@@ -6,7 +6,7 @@ const semanticColors = {
     contrastText: colors.white,
   },
   secondary: {
-    main: colors.romantic,
+    main: colors.salmon,
     contrastText: colors.black,
   },
   background: {

@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-import { useMutateLikes } from 'sdk/hooks/medias';
+import { useMutateLikes } from 'sdk';
 import { ACTIONS } from 'sdk/constants';
 import mediaPropTypes from '../../prop-types/mediaPropTypes';
 
@@ -19,6 +19,11 @@ const propTypes = {
   type: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
   metadata: mediaPropTypes.isRequired,
+  onChange: PropTypes.func,
+};
+
+const defaultProps = {
+  onChange: () => {},
 };
 
 const useStyles = makeStyles(({ spacing, breakpoints }) => ({
@@ -49,7 +54,7 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
 }));
 
 const MediaCard = ({
-  type, source, metadata,
+  type, source, metadata, onChange,
 }) => {
   const classes = useStyles();
   const {
@@ -66,6 +71,7 @@ const MediaCard = ({
     likesMutation.mutate(ACTIONS.INCREMENT, {
       onSuccess: () => {
         setLikesCount(likesCount + 1);
+        onChange();
       },
     });
   };
@@ -108,5 +114,6 @@ const MediaCard = ({
 };
 
 MediaCard.propTypes = propTypes;
+MediaCard.defaultProps = defaultProps;
 
 export default MediaCard;
