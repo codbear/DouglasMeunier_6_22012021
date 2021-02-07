@@ -1,6 +1,7 @@
 import React from 'react';
-
-import { makeStyles, Typography } from '@material-ui/core';
+import {
+  makeStyles, Typography, useMediaQuery, useTheme,
+} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 
 import TagsCloud from 'Modules/tags';
@@ -9,14 +10,19 @@ import PhotographerAvatar from '../PhotographerAvatar';
 import PhotographerInfo from '../PhotographerInfo';
 import photographerPropTypes from '../../prop-types/photographerPropTypes';
 
+const propTypes = {
+  photographer: photographerPropTypes.isRequired,
+};
+
 const useStyles = makeStyles(({ spacing, breakpoints }) => ({
   root: {
     display: 'grid',
     gridTemplateColumns: '2fr 1fr',
-    columnGap: spacing(2),
-    padding: spacing(6, 7),
+    padding: spacing(2),
     [breakpoints.up('md')]: {
       gridTemplateColumns: '2fr 1fr 1fr',
+      columnGap: spacing(2),
+      padding: spacing(6, 7),
     },
     [breakpoints.up('lg')]: {
       gridTemplateColumns: '1fr 1fr 1fr',
@@ -35,6 +41,7 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
     left: 0,
     right: 0,
     display: 'flex',
+    zIndex: 100,
     [breakpoints.up('md')]: {
       position: 'relative',
       display: 'block',
@@ -58,6 +65,8 @@ const PhotographerCardHorizontal = ({
   photographer,
 }) => {
   const classes = useStyles();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
   const {
     name,
     city,
@@ -101,12 +110,17 @@ const PhotographerCardHorizontal = ({
         </Button>
       </div>
       <div className={classes.avatarContainer}>
-        <PhotographerAvatar id={243} name={name} filename={portrait} />
+        <PhotographerAvatar
+          id={243}
+          name={name}
+          filename={portrait}
+          width={isSmallScreen ? 100 : 200}
+        />
       </div>
     </aside>
   );
 };
 
-PhotographerCardHorizontal.propTypes = photographerPropTypes;
+PhotographerCardHorizontal.propTypes = propTypes;
 
 export default PhotographerCardHorizontal;

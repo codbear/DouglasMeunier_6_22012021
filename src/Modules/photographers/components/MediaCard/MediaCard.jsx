@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Card,
@@ -10,46 +11,46 @@ import {
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+import mediaPropTypes from '../../prop-types/mediaPropTypes';
+
 const propTypes = {
   type: PropTypes.string.isRequired,
-  filename: PropTypes.string.isRequired,
-  metadata: PropTypes.shape({
-    id: PropTypes.number,
-    photographerId: PropTypes.number,
-    tags: PropTypes.arrayOf(PropTypes.string),
-    likes: PropTypes.number,
-    date: PropTypes.string,
-    price: PropTypes.number,
-    title: PropTypes.string,
-  }).isRequired,
+  source: PropTypes.string.isRequired,
+  metadata: mediaPropTypes.isRequired,
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(({ spacing, breakpoints }) => ({
   root: {
-    maxWidth: 350,
+    width: 335,
+    [breakpoints.up('md')]: {
+      width: 350,
+    },
   },
   media: {
-    height: 300,
+    height: 190,
     width: 'unset',
+    minWidth: '100%',
+    [breakpoints.up('md')]: {
+      height: 300,
+    },
   },
   cardActions: {
     justifyContent: 'flex-end',
   },
   mediaNameContainer: {
     flexGrow: 2,
+    marginRight: spacing(1),
   },
-  alignRight: {
-    display: 'flex',
-    alignItems: 'center',
+  noWrap: {
+    whiteSpace: 'nowrap',
   },
-});
+}));
 
 const MediaCard = ({
-  type, filename, metadata,
+  type, source, metadata,
 }) => {
   const classes = useStyles();
   const {
-    photographerId,
     likes,
     price,
     title,
@@ -60,7 +61,7 @@ const MediaCard = ({
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          src={`/images/Photographers/${photographerId}/${filename}`}
+          src={source}
           component={type}
           alt={title}
           title={title}
@@ -68,11 +69,11 @@ const MediaCard = ({
       </CardActionArea>
       <CardActions className={classes.cardActions}>
         <div className={classes.mediaNameContainer}>
-          <Typography variant="h5" component="p" color="primary">
+          <Typography variant="h6" component="p" color="primary">
             { title }
           </Typography>
         </div>
-        <Typography variant="h5" component="p" color="primary">
+        <Typography variant="h6" component="p" color="primary" className={classes.noWrap}>
           { `${price} €` }
         </Typography>
         <Button
@@ -82,7 +83,7 @@ const MediaCard = ({
             <FavoriteIcon />
           )}
         >
-          <Typography variant="h5" component="p" color="primary">
+          <Typography variant="h6" component="p" color="primary">
             { likes }
           </Typography>
         </Button>

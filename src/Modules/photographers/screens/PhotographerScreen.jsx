@@ -4,8 +4,9 @@ import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 
 import Banner from 'Modules/banner';
-import { useGetPhotographer } from 'sdk';
+import { useGetPhotographer, useFindMedias } from 'sdk';
 import PhotographerCardHorizontal from '../components/PhotographerCardHorizontal';
+import WithTypeMediaCard from '../hoc/WithTypeMediaCard';
 
 const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
   header: {
@@ -15,12 +16,21 @@ const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
     right: 0,
   },
   main: {
-    margin: spacing(20, 0, 9, 0),
+    marginTop: spacing(20),
   },
   photographerCardContainer: {
     [breakpoints.up('md')]: {
       backgroundColor: palette.background.alternative,
       margin: spacing(0, 12.5),
+    },
+  },
+  mediasGrid: {
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'space-around',
+    padding: spacing(12.5, 0),
+    '& article': {
+      margin: spacing(2),
     },
   },
 }));
@@ -29,7 +39,14 @@ const PhotographerScreen = () => {
   const classes = useStyles();
   const { id } = useParams();
 
-  const { isSuccess, data } = useGetPhotographer(id);
+  const {
+    isSuccess: isPhotographerRequestSuccess,
+    data: photographer,
+  } = useGetPhotographer(id);
+  const {
+    isSuccess: isMediasRequestSuccess,
+    data: medias,
+  } = useFindMedias(id);
 
   return (
     <>
@@ -37,15 +54,24 @@ const PhotographerScreen = () => {
         <Banner />
       </header>
       <main className={classes.main}>
-        {isSuccess && (
-          <>
-            <div className={classes.photographerCardContainer}>
-              <PhotographerCardHorizontal
-                photographer={data}
-              />
-            </div>
-          </>
+        {isPhotographerRequestSuccess && (
+        <div className={classes.photographerCardContainer}>
+          <PhotographerCardHorizontal
+            photographer={photographer}
+          />
+        </div>
         )}
+        <div className={classes.mediasGrid}>
+          {isMediasRequestSuccess && (
+            medias.map((media) => (
+              <article key={media.id}>
+                <WithTypeMediaCard
+                  media={media}
+                />
+              </article>
+            ))
+          )}
+        </div>
       </main>
     </>
   );
