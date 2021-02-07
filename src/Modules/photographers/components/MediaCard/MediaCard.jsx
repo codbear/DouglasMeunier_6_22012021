@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+import { useMutateLikes } from 'sdk/hooks/medias';
+import { ACTIONS } from 'sdk/constants';
 import mediaPropTypes from '../../prop-types/mediaPropTypes';
 
 const propTypes = {
@@ -51,10 +53,22 @@ const MediaCard = ({
 }) => {
   const classes = useStyles();
   const {
+    id,
+    photographerId,
     likes,
     price,
     title,
   } = metadata;
+  const [likesCount, setLikesCount] = useState(likes);
+  const likesMutation = useMutateLikes(photographerId, id);
+
+  const handleClick = () => {
+    likesMutation.mutate(ACTIONS.INCREMENT, {
+      onSuccess: () => {
+        setLikesCount(likesCount + 1);
+      },
+    });
+  };
 
   return (
     <Card className={classes.root} elevation={0}>
@@ -77,6 +91,7 @@ const MediaCard = ({
           { `${price} €` }
         </Typography>
         <Button
+          onClick={handleClick}
           color="primary"
           aria-label="likes"
           endIcon={(
@@ -84,7 +99,7 @@ const MediaCard = ({
           )}
         >
           <Typography variant="h6" component="p" color="primary">
-            { likes }
+            { likesCount }
           </Typography>
         </Button>
       </CardActions>

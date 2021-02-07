@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import request from '../api/request';
 
 export const useFind = (photographerId) => {
@@ -16,5 +16,13 @@ export const useGet = (photographerId, id) => {
   return useQuery(
     ['photographer', id],
     () => request(route),
+  );
+};
+
+export const useMutateLikes = (photographerId, id) => {
+  const route = `photographers/${photographerId}/medias/${id}`;
+
+  return useMutation(
+    (action) => request(route, 'PATCH', { action }),
   );
 };
