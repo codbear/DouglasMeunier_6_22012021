@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
 
 import Banner from 'Modules/banner';
-import { useGetPhotographer, useFindMedias, useLikesCount } from 'sdk';
+import MediasCollection from 'Modules/medias';
+import { useFindMedias, useGetPhotographer, useLikesCount } from 'sdk';
 import PhotographerCardHorizontal from '../components/PhotographerCardHorizontal';
 import StatsSnackbar from '../components/StatsTip';
-import WithTypeMediaCard from '../hoc/WithTypeMediaCard';
 
 const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
   header: {
@@ -35,21 +35,11 @@ const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
       zIndex: 100,
     },
   },
-  mediasGrid: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    justifyContent: 'space-around',
-    padding: spacing(12.5, 0),
-    '& article': {
-      margin: spacing(2),
-    },
-  },
 }));
 
 const PhotographerScreen = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const [totalLikes, setTotalLikes] = useState();
 
   const {
     isSuccess: isPhotographerRequestSuccess,
@@ -60,14 +50,6 @@ const PhotographerScreen = () => {
     data: medias,
   } = useFindMedias(id);
   const { data: likesCount } = useLikesCount(id);
-
-  const handleChange = () => {
-    setTotalLikes(totalLikes + 1);
-  };
-
-  useEffect(() => {
-    setTotalLikes(likesCount);
-  }, [likesCount]);
 
   return (
     <>
@@ -83,22 +65,13 @@ const PhotographerScreen = () => {
               />
             </div>
             <div className={classes.statsSnackbarContainer}>
-              <StatsSnackbar likesCount={totalLikes} price={photographer.price} />
+              <StatsSnackbar likesCount={likesCount} price={photographer.price} />
             </div>
           </>
         )}
-        <div className={classes.mediasGrid}>
-          {isMediasRequestSuccess && (
-            medias.map((media) => (
-              <article key={media.id}>
-                <WithTypeMediaCard
-                  media={media}
-                  onChange={handleChange}
-                />
-              </article>
-            ))
-          )}
-        </div>
+        {isMediasRequestSuccess && (
+          <MediasCollection medias={medias} />
+        )}
       </main>
     </>
   );

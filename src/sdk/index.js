@@ -9,3 +9,4 @@ export {
   useLikesCount,
 } from './hooks/medias';
 export { default as useFindTags } from './hooks/tags';
+export { default as LIKES_ACTIONS } from './constants/actions';
