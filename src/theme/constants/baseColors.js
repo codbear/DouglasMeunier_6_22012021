@@ -7,5 +7,6 @@ export default {
   whiteSmoke: '#fafafa',
   white: '#ffffff',
   sangria: '#901c1c',
+  salmon: '#db8876',
   romantic: '#d3573c',
 };

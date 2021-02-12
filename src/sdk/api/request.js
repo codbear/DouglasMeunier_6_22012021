@@ -1,6 +1,7 @@
 import APIMocker from 'sdk/api/APIMocker';
+import { METHODS } from 'sdk/constants';
 
-const request = async (route, method = 'GET', body = {}) => {
+const request = async (route, method = METHODS.GET, body = {}) => {
   const url = '/api/FishEyeDataFR.json';
 
   const headers = new Headers({
@@ -9,11 +10,11 @@ const request = async (route, method = 'GET', body = {}) => {
   });
 
   const options = {
-    method,
+    method: METHODS.GET,
     headers,
   };
 
-  if (method !== 'GET') options.body = JSON.stringify(body);
+  // if (method !== METHODS.GET) options.body = JSON.stringify(body);
 
   const response = await fetch(url, options);
 
@@ -23,7 +24,7 @@ const request = async (route, method = 'GET', body = {}) => {
 
   const data = await response.json();
 
-  return APIMocker(route, data);
+  return APIMocker(route, method, data, body);
 };
 
 export default request;

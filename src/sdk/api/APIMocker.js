@@ -1,11 +1,63 @@
-const APIMocker = (route, data) => {
+import { ACTIONS, METHODS } from 'sdk/constants';
+
+const mergeWithLocalStorage = (mediasFromJSON) => {
+  const medias = [];
+
+  mediasFromJSON.forEach((staticMedia) => {
+    const dynamicMedia = staticMedia;
+
+    try {
+      if (localStorage.getItem(dynamicMedia.id)) {
+        dynamicMedia.likes = Number(localStorage.getItem(dynamicMedia.id));
+      } else {
+        localStorage.setItem(dynamicMedia.id, dynamicMedia.likes);
+      }
+    } finally {
+      medias.push(dynamicMedia);
+    }
+  });
+
+  return medias;
+};
+
+const APIMocker = (route, method, data, body) => {
   const [resourceType, resourceId, subresourceType, subresourceId] = route.split('/');
 
   if (resourceType === 'photographers') {
+    const mediasFromJSON = data.media
+      .filter((media) => media.photographerId === Number(resourceId));
+    const medias = mergeWithLocalStorage(mediasFromJSON);
+
+    if (subresourceType === 'likes') {
+      let likesCount = 0;
+
+      medias.forEach((media) => {
+        likesCount += media.likes;
+      });
+
+      return likesCount;
+    }
+
     if (subresourceType === 'medias') {
-      return subresourceId
-        ? data.media.find((media) => media.id === Number(subresourceId))
-        : data.media.filter((media) => media.photographerId === Number(resourceId));
+      if (subresourceId) {
+        const media = medias.find((item) => item.id === Number(subresourceId));
+
+        if (method === METHODS.PATCH) {
+          const count = body.action === ACTIONS.INCREMENT
+            ? Number(media.likes) + 1
+            : Number(media.likes) - 1;
+
+          try {
+            localStorage.setItem(media.id, count);
+          } finally {
+            media.likes = count;
+          }
+        }
+
+        return media;
+      }
+
+      return medias;
     }
 
     return resourceId

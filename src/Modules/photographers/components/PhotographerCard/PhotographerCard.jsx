@@ -10,6 +10,10 @@ import PhotographerInfo from 'Modules/photographers/components/PhotographerInfo'
 import PhotographerAvatar from '../PhotographerAvatar';
 import photographerPropTypes from '../../prop-types/photographerPropTypes';
 
+const propTypes = {
+  photographer: photographerPropTypes.isRequired,
+};
+
 const useStyles = makeStyles(() => ({
   root: {
     width: 300,
@@ -72,6 +76,6 @@ const PhotographerCard = ({ photographer }) => {
   );
 };
 
-PhotographerCard.propTypes = photographerPropTypes;
+PhotographerCard.propTypes = propTypes;
 
 export default PhotographerCard;

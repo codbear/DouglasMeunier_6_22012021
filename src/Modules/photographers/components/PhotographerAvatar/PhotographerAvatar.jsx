@@ -6,17 +6,17 @@ import { makeStyles } from '@material-ui/core';
 const propTypes = {
   filename: PropTypes.string,
   alternativeLabel: PropTypes.string,
+  width: PropTypes.number,
 };
 
 const defaultProps = {
   filename: 'placeholder.png',
   alternativeLabel: 'Avatar',
+  width: 200,
 };
 
 const useStyles = makeStyles(({ palette }) => ({
   image: {
-    width: 200,
-    height: 200,
     overflow: 'hidden',
     borderRadius: '50%',
     objectFit: 'cover',
@@ -26,12 +26,18 @@ const useStyles = makeStyles(({ palette }) => ({
 }));
 
 const PhotographerAvatar = ({
-  filename, alternativeLabel,
+  filename, alternativeLabel, width,
 }) => {
   const classes = useStyles();
 
   return (
-    <img src={`/images/Avatar/thumbnails/${filename}`} alt={alternativeLabel} className={classes.image} />
+    <img
+      src={`/images/Avatar/thumbnails/${filename}`}
+      alt={alternativeLabel}
+      className={classes.image}
+      width={width}
+      height={width}
+    />
   );
 };
 
