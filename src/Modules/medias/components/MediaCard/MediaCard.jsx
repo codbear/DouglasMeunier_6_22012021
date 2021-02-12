@@ -11,14 +11,12 @@ import {
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-import { useMutateLikes } from 'sdk';
-import { ACTIONS } from 'sdk/constants';
-import mediaPropTypes from '../../prop-types/mediaPropTypes';
+import { useMutateLikes, LIKES_ACTIONS } from 'sdk';
+
+import mediaPropTypes from '../../prop-types';
 
 const propTypes = {
-  type: PropTypes.string.isRequired,
-  source: PropTypes.string.isRequired,
-  metadata: mediaPropTypes.isRequired,
+  media: mediaPropTypes.isRequired,
   onChange: PropTypes.func,
 };
 
@@ -54,7 +52,7 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
 }));
 
 const MediaCard = ({
-  type, source, metadata, onChange,
+  media, onChange,
 }) => {
   const classes = useStyles();
   const {
@@ -63,12 +61,14 @@ const MediaCard = ({
     likes,
     price,
     title,
-  } = metadata;
+    source,
+    component,
+  } = media;
   const [likesCount, setLikesCount] = useState(likes);
   const likesMutation = useMutateLikes(photographerId, id);
 
   const handleClick = () => {
-    likesMutation.mutate(ACTIONS.INCREMENT, {
+    likesMutation.mutate(LIKES_ACTIONS.INCREMENT, {
       onSuccess: () => {
         setLikesCount(likesCount + 1);
         onChange();
@@ -82,7 +82,7 @@ const MediaCard = ({
         <CardMedia
           className={classes.media}
           src={source}
-          component={type}
+          component={component}
           alt={title}
           title={title}
         />
