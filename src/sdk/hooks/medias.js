@@ -5,7 +5,7 @@ export const useFind = (photographerId) => {
   const route = `photographers/${photographerId}/medias`;
 
   return useQuery(
-    'photographers',
+    ['photographer', photographerId, 'medias'],
     () => request(route),
   );
 };
@@ -14,7 +14,7 @@ export const useGet = (photographerId, id) => {
   const route = `photographers/${photographerId}/medias/${id}`;
 
   return useQuery(
-    ['photographer', id],
+    ['photographer', photographerId, 'medias', id],
     () => request(route),
   );
 };
