@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { request } from '../api';
 
-export const useFind = (photographerId) => {
+const useMedias = (photographerId) => {
   const route = `photographers/${photographerId}/medias`;
 
   return useQuery(
@@ -10,7 +10,7 @@ export const useFind = (photographerId) => {
   );
 };
 
-export const useGet = (photographerId, id) => {
+const useMedia = (photographerId, id) => {
   const route = `photographers/${photographerId}/medias/${id}`;
 
   return useQuery(
@@ -19,7 +19,7 @@ export const useGet = (photographerId, id) => {
   );
 };
 
-export const useMutateLikes = (photographerId, id) => {
+const useLike = (photographerId, id) => {
   const route = `photographers/${photographerId}/medias/${id}`;
 
   return useMutation(
@@ -27,11 +27,4 @@ export const useMutateLikes = (photographerId, id) => {
   );
 };
 
-export const useLikesCount = (photographerId) => {
-  const route = `photographers/${photographerId}/likes`;
-
-  return useQuery(
-    ['likes', photographerId],
-    () => request(route),
-  );
-};
+export { useMedias, useMedia, useLike };

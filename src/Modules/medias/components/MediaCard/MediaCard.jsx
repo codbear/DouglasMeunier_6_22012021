@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-import { useMutateLikes, LIKES_ACTIONS } from 'sdk';
+import { useLike } from 'sdk';
 
 import mediaPropTypes from '../../prop-types';
 
@@ -65,7 +65,7 @@ const MediaCard = ({
     component,
   } = media;
   const [likesCount, setLikesCount] = useState(likes);
-  const likesMutation = useMutateLikes(photographerId, id);
+  const likesMutation = useLike(photographerId, id);
 
   const handleClick = () => {
     likesMutation.mutate({}, {

@@ -1,22 +1,22 @@
 import { useQuery } from 'react-query';
 import { request } from '../api';
 
-export const useFindWithTags = (activeTags) => {
+const usePhotographersWithTags = (tags) => {
   const {
     isSuccess,
     data,
   } = useQuery('photographers', () => request('photographers'));
 
-  const photographers = activeTags.length > 0
+  const photographers = tags.length > 0
     ? data?.filter((photographer) => (
-      photographer.tags.some((tag) => activeTags.includes(tag))
+      photographer.tags.some((tag) => tags.includes(tag))
     ))
     : data;
 
   return { isSuccess, photographers };
 };
 
-export const useGet = (id) => {
+const usePhotographer = (id) => {
   const route = `photographers/${id}`;
 
   const {
@@ -29,3 +29,5 @@ export const useGet = (id) => {
 
   return { isSuccess, data };
 };
+
+export { usePhotographersWithTags, usePhotographer };
