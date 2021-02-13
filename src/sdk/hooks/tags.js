@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import request from '../api/request';
+import { request } from '../api';
 
 const useFind = () => {
   const {

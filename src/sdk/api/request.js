@@ -1,30 +1,32 @@
-import APIMocker from 'sdk/api/APIMocker';
-import { METHODS } from 'sdk/constants';
+import APIMocker from './APIMocker';
+import HTTP_METHODS from '../constants';
 
-const request = async (route, method = METHODS.GET, body = {}) => {
-  const url = '/api/FishEyeDataFR.json';
+const withMocker = (request) => async (route, method = HTTP_METHODS.GET) => {
+  const data = await request('/api/FishEyeDataFR.json');
 
+  return APIMocker(route, method, data);
+};
+
+const request = async (route, method = HTTP_METHODS.GET, body = {}) => {
   const headers = new Headers({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   });
 
   const options = {
-    method: METHODS.GET,
+    method,
     headers,
   };
 
-  // if (method !== METHODS.GET) options.body = JSON.stringify(body);
+  if (method !== HTTP_METHODS.GET) options.body = JSON.stringify(body);
 
-  const response = await fetch(url, options);
+  const response = await fetch(route, options);
 
   if (!response.ok) {
     throw new Error('Une erreur inattendue est survenue, veuillez réessayer.');
   }
 
-  const data = await response.json();
-
-  return APIMocker(route, method, data, body);
+  return response.json();
 };
 
-export default request;
+export default withMocker(request);

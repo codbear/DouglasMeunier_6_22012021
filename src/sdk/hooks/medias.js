@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from 'react-query';
-import request from '../api/request';
+import { request } from '../api';
 
 export const useFind = (photographerId) => {
   const route = `photographers/${photographerId}/medias`;
@@ -23,7 +23,7 @@ export const useMutateLikes = (photographerId, id) => {
   const route = `photographers/${photographerId}/medias/${id}`;
 
   return useMutation(
-    (action) => request(route, 'PATCH', { action }),
+    (payload) => request(route, 'PATCH', payload),
   );
 };
 

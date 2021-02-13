@@ -68,7 +68,7 @@ const MediaCard = ({
   const likesMutation = useMutateLikes(photographerId, id);
 
   const handleClick = () => {
-    likesMutation.mutate(LIKES_ACTIONS.INCREMENT, {
+    likesMutation.mutate({}, {
       onSuccess: () => {
         setLikesCount(likesCount + 1);
         onChange();

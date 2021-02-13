@@ -6,7 +6,7 @@ export default class Media {
     this.photographerId = metadata.photographerId;
     this.tags = metadata.tags;
     this.likes = metadata.likes;
-    this.date = new Date(metadata.date);
+    this.date = metadata.date;
     this.price = metadata.price;
     this.title = metadata.title;
     this.component = MEDIA_TYPE.IMAGE;
