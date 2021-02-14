@@ -7,7 +7,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const propTypes = {
   price: PropTypes.number.isRequired,
-  likesCount: PropTypes.number.isRequired,
+  likes: PropTypes.number.isRequired,
 };
 
 const useStyles = makeStyles(({ palette, spacing }) => ({
@@ -26,16 +26,16 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
   },
 }));
 
-const StatsSnackbar = ({ price, likesCount }) => {
+const StatsSnackbar = ({ price, likes }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <div className={classes.likesContainer}>
         <Typography variant="h5" component="p">
-          { likesCount }
+          { likes }
         </Typography>
-        <FavoriteIcon fontSize="medium" />
+        <FavoriteIcon />
       </div>
       <Typography variant="h5" component="p">
         { `${price}€ / jour` }

@@ -1,32 +1,18 @@
-import { ACTIONS, METHODS } from 'sdk/constants';
+import mediaFactory from 'Modules/medias/services';
+import METHODS from '../constants';
+import { mergeMediasMetadata, mutateMediasMetadata } from '../localStorage';
 
-const mergeWithLocalStorage = (mediasFromJSON) => {
-  const medias = [];
-
-  mediasFromJSON.forEach((staticMedia) => {
-    const dynamicMedia = staticMedia;
-
-    try {
-      if (localStorage.getItem(dynamicMedia.id)) {
-        dynamicMedia.likes = Number(localStorage.getItem(dynamicMedia.id));
-      } else {
-        localStorage.setItem(dynamicMedia.id, dynamicMedia.likes);
-      }
-    } finally {
-      medias.push(dynamicMedia);
-    }
-  });
-
-  return medias;
-};
-
-const APIMocker = (route, method, data, body) => {
+const APIMocker = (route, method, data) => {
   const [resourceType, resourceId, subresourceType, subresourceId] = route.split('/');
 
   if (resourceType === 'photographers') {
     const mediasFromJSON = data.media
-      .filter((media) => media.photographerId === Number(resourceId));
-    const medias = mergeWithLocalStorage(mediasFromJSON);
+      .filter((mediaFromJSON) => mediaFromJSON.photographerId === Number(resourceId))
+      .map((mediaFromJSON) => ({
+        hasBeenLiked: false,
+        ...mediaFromJSON,
+      }));
+    const medias = mergeMediasMetadata(mediasFromJSON, resourceId);
 
     if (subresourceType === 'likes') {
       let likesCount = 0;
@@ -43,15 +29,14 @@ const APIMocker = (route, method, data, body) => {
         const media = medias.find((item) => item.id === Number(subresourceId));
 
         if (method === METHODS.PATCH) {
-          const count = body.action === ACTIONS.INCREMENT
-            ? Number(media.likes) + 1
-            : Number(media.likes) - 1;
+          const mutatedMetadata = mutateMediasMetadata(resourceId, subresourceId);
 
-          try {
-            localStorage.setItem(media.id, count);
-          } finally {
-            media.likes = count;
-          }
+          const metadata = {
+            ...media,
+            ...mutatedMetadata,
+          };
+
+          return mediaFactory(metadata);
         }
 
         return media;

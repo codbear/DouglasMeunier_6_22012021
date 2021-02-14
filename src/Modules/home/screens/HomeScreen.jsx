@@ -3,8 +3,8 @@ import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 
 import {
-  useFindPhotographersWithTags,
-  useFindTags,
+  usePhotographersWithTags,
+  useTags,
 } from 'sdk';
 
 import Banner from 'Modules/banner';
@@ -62,12 +62,12 @@ const HomeScreen = () => {
   const {
     isSuccess: isTagsListRequestSuccess,
     data: tagsList,
-  } = useFindTags();
+  } = useTags();
 
   const {
     isSuccess: isPhotographersRequestSuccess,
     photographers,
-  } = useFindPhotographersWithTags(activeTags);
+  } = usePhotographersWithTags(activeTags);
 
   return (
     <>

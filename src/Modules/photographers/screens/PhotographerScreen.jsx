@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
 
 import Banner from 'Modules/banner';
 import MediasCollection from 'Modules/medias';
-import { useFindMedias, useGetPhotographer, useLikesCount } from 'sdk';
+import { useMedias, usePhotographer } from 'sdk';
 import PhotographerCardHorizontal from '../components/PhotographerCardHorizontal';
 import StatsSnackbar from '../components/StatsTip';
 
@@ -40,16 +40,26 @@ const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
 const PhotographerScreen = () => {
   const classes = useStyles();
   const { id } = useParams();
+  const [likes, setLikes] = useState(0);
 
   const {
     isSuccess: isPhotographerRequestSuccess,
     data: photographer,
-  } = useGetPhotographer(id);
+  } = usePhotographer(id);
   const {
     isSuccess: isMediasRequestSuccess,
     data: medias,
-  } = useFindMedias(id);
-  const { data: likesCount } = useLikesCount(id);
+  } = useMedias(id);
+
+  useEffect(() => {
+    if (isMediasRequestSuccess) {
+      let counter = 0;
+      medias.forEach((media) => {
+        counter += media.likes;
+      });
+      setLikes(counter);
+    }
+  }, [isMediasRequestSuccess, medias, setLikes]);
 
   return (
     <>
@@ -64,9 +74,11 @@ const PhotographerScreen = () => {
                 photographer={photographer}
               />
             </div>
-            <div className={classes.statsSnackbarContainer}>
-              <StatsSnackbar likesCount={likesCount} price={photographer.price} />
-            </div>
+            {isMediasRequestSuccess && (
+              <div className={classes.statsSnackbarContainer}>
+                <StatsSnackbar likes={likes} price={photographer.price} />
+              </div>
+            )}
           </>
         )}
         {isMediasRequestSuccess && (

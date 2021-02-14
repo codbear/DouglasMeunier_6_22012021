@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
-import request from '../api/request';
+import { request } from '../api';
 
-const useFind = () => {
+const useTags = () => {
   const {
     isSuccess,
     data,
@@ -10,4 +10,4 @@ const useFind = () => {
   return { isSuccess, data };
 };
 
-export default useFind;
+export default useTags;

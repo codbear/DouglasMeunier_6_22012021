@@ -1,37 +1,30 @@
 import { useMutation, useQuery } from 'react-query';
-import request from '../api/request';
+import { request } from '../api';
 
-export const useFind = (photographerId) => {
+const useMedias = (photographerId) => {
   const route = `photographers/${photographerId}/medias`;
 
   return useQuery(
-    'photographers',
+    ['photographer', photographerId, 'medias'],
     () => request(route),
   );
 };
 
-export const useGet = (photographerId, id) => {
+const useMedia = (photographerId, id) => {
   const route = `photographers/${photographerId}/medias/${id}`;
 
   return useQuery(
-    ['photographer', id],
+    ['photographer', photographerId, 'medias', id],
     () => request(route),
   );
 };
 
-export const useMutateLikes = (photographerId, id) => {
+const useLike = (photographerId, id) => {
   const route = `photographers/${photographerId}/medias/${id}`;
 
   return useMutation(
-    (action) => request(route, 'PATCH', { action }),
+    (payload) => request(route, 'PATCH', payload),
   );
 };
 
-export const useLikesCount = (photographerId) => {
-  const route = `photographers/${photographerId}/likes`;
-
-  return useQuery(
-    ['likes', photographerId],
-    () => request(route),
-  );
-};
+export { useMedias, useMedia, useLike };
