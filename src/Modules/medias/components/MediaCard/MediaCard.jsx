@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -7,9 +6,11 @@ import {
   CardActionArea,
   CardMedia,
   CardActions,
-  Button, Typography,
+  Button,
+  Typography,
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 import { useLike } from 'sdk';
 
@@ -17,11 +18,6 @@ import mediaPropTypes from '../../prop-types';
 
 const propTypes = {
   media: mediaPropTypes.isRequired,
-  onChange: PropTypes.func,
-};
-
-const defaultProps = {
-  onChange: () => {},
 };
 
 const useStyles = makeStyles(({ spacing, breakpoints }) => ({
@@ -52,9 +48,10 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
 }));
 
 const MediaCard = ({
-  media, onChange,
+  media,
 }) => {
   const classes = useStyles();
+  const [metadata, setMetadata] = useState(media);
   const {
     id,
     photographerId,
@@ -63,15 +60,14 @@ const MediaCard = ({
     title,
     source,
     component,
-  } = media;
-  const [likesCount, setLikesCount] = useState(likes);
+    hasBeenLiked,
+  } = metadata;
   const likesMutation = useLike(photographerId, id);
 
   const handleClick = () => {
     likesMutation.mutate({}, {
-      onSuccess: () => {
-        setLikesCount(likesCount + 1);
-        onChange();
+      onSuccess: (data) => {
+        setMetadata(data);
       },
     });
   };
@@ -100,12 +96,14 @@ const MediaCard = ({
           onClick={handleClick}
           color="primary"
           aria-label="likes"
-          endIcon={(
+          endIcon={hasBeenLiked ? (
             <FavoriteIcon />
+          ) : (
+            <FavoriteBorderIcon />
           )}
         >
           <Typography variant="h6" component="p" color="primary">
-            { likesCount }
+            { likes }
           </Typography>
         </Button>
       </CardActions>
@@ -114,6 +112,5 @@ const MediaCard = ({
 };
 
 MediaCard.propTypes = propTypes;
-MediaCard.defaultProps = defaultProps;
 
 export default MediaCard;

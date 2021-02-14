@@ -1,3 +1,4 @@
+import mediaFactory from 'Modules/medias/services';
 import METHODS from '../constants';
 import { mergeMediasMetadata, mutateMediasMetadata } from '../localStorage';
 
@@ -28,7 +29,14 @@ const APIMocker = (route, method, data) => {
         const media = medias.find((item) => item.id === Number(subresourceId));
 
         if (method === METHODS.PATCH) {
-          mutateMediasMetadata(resourceId, subresourceId);
+          const mutatedMetadata = mutateMediasMetadata(resourceId, subresourceId);
+
+          const metadata = {
+            ...media,
+            ...mutatedMetadata,
+          };
+
+          return mediaFactory(metadata);
         }
 
         return media;

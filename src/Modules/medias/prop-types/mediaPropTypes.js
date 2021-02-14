@@ -10,6 +10,7 @@ const mediaPropTypes = PropTypes.shape({
   title: PropTypes.string,
   source: PropTypes.string,
   component: PropTypes.string,
+  hasBeenLiked: PropTypes.bool,
 });
 
 export default mediaPropTypes;

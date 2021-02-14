@@ -11,5 +11,6 @@ export default class Media {
     this.title = metadata.title;
     this.component = MEDIA_TYPE.IMAGE;
     this.source = '/images/placeholder.png';
+    this.hasBeenLiked = metadata.hasBeenLiked;
   }
 }
