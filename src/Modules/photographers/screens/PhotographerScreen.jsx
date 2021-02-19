@@ -3,9 +3,10 @@ import { useParams } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core';
 
+import { useMedias, usePhotographer } from 'sdk';
+
 import Banner from 'Modules/banner';
 import MediasCollection from 'Modules/medias';
-import { useMedias, usePhotographer } from 'sdk';
 import PhotographerCardHorizontal from '../components/PhotographerCardHorizontal';
 import StatsSnackbar from '../components/StatsTip';
 
@@ -70,19 +71,17 @@ const PhotographerScreen = () => {
         {isPhotographerRequestSuccess && (
           <>
             <div className={classes.photographerCardContainer}>
-              <PhotographerCardHorizontal
-                photographer={photographer}
-              />
+              <PhotographerCardHorizontal photographer={photographer} />
             </div>
             {isMediasRequestSuccess && (
-              <div className={classes.statsSnackbarContainer}>
-                <StatsSnackbar likes={likes} price={photographer.price} />
-              </div>
+              <>
+                <MediasCollection medias={medias} />
+                <aside className={classes.statsSnackbarContainer}>
+                  <StatsSnackbar likes={likes} price={photographer.price} />
+                </aside>
+              </>
             )}
           </>
-        )}
-        {isMediasRequestSuccess && (
-          <MediasCollection medias={medias} />
         )}
       </main>
     </>

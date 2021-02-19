@@ -9,12 +9,6 @@ const defaultTheme = createMuiTheme({
       'sans-serif',
     ].join(', '),
   },
-  breakpoints: {
-    values: {
-      md: 980,
-      lg: 1280,
-    },
-  },
   overrides: {
     MuiCssBaseline: {
       '@global': {
