@@ -29,6 +29,9 @@ const useStyles = makeStyles(({ palette }) => ({
   inputError: {
     borderColor: palette.error.main,
   },
+  errorMessage: {
+    color: palette.secondary.contrastText,
+  },
 }));
 
 const TextInput = ({
@@ -60,7 +63,9 @@ const TextInput = ({
         fullWidth
         disableUnderline
       />
-      <FormHelperText>{error}</FormHelperText>
+      <FormHelperText className={classes.errorMessage} variant="outlined">
+        {error}
+      </FormHelperText>
     </>
   );
 };
