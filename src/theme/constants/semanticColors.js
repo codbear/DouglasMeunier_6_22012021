@@ -11,14 +11,17 @@ const semanticColors = {
   },
   background: {
     default: colors.white,
-    primary: colors.sangria,
-    secondary: colors.romantic,
-    alternative: colors.whiteSmoke,
     paper: colors.white,
+    alternative: {
+      main: colors.whiteSmoke,
+      contrastText: colors.emperor,
+    },
   },
   text: {
     primary: colors.black,
     secondary: colors.emperor,
+    tertiary: colors.romantic,
+    white: colors.white,
   },
   shadow: colors.paleCoal,
   border: colors.alto,

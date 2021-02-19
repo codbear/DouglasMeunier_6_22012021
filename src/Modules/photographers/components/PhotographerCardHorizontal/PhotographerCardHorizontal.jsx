@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   makeStyles, Typography, useMediaQuery, useTheme,
 } from '@material-ui/core';
@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 
 import TagsCloud from 'Modules/tags';
 
+import ContactForm from 'Modules/form';
 import PhotographerAvatar from '../PhotographerAvatar';
 import PhotographerInfo from '../PhotographerInfo';
 import photographerPropTypes from '../../prop-types/photographerPropTypes';
@@ -67,57 +68,68 @@ const PhotographerCardHorizontal = ({
   const classes = useStyles();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [isContactFormOpen, setIsContactFormOpen] = useState(false);
   const {
-    name,
-    city,
-    country,
-    tags,
-    tagline,
-    price,
-    portrait,
+    name, city, country, tags, tagline, price, portrait,
   } = photographer;
 
+  const handleOpenContactForm = () => {
+    setIsContactFormOpen(true);
+  };
+
+  const handleCloseContactForm = () => {
+    setIsContactFormOpen(false);
+  };
+
   return (
-    <aside className={classes.root}>
-      <div className={classes.infoContainer}>
-        <Typography
-          variant="h2"
-          component="h1"
-          color="secondary"
-        >
-          { name }
-        </Typography>
-        <PhotographerInfo
-          city={city}
-          price={price}
-          country={country}
-          tagline={tagline}
-          name={name}
-          variant="horizontal"
-        />
-        <div className={classes.tagsCloudContainer}>
-          <TagsCloud tags={tags} />
+    <>
+      <aside className={classes.root}>
+        <div className={classes.infoContainer}>
+          <Typography
+            variant="h2"
+            component="h1"
+            color="secondary"
+          >
+            { name }
+          </Typography>
+          <PhotographerInfo
+            city={city}
+            price={price}
+            country={country}
+            tagline={tagline}
+            name={name}
+            variant="horizontal"
+          />
+          <div className={classes.tagsCloudContainer}>
+            <TagsCloud tags={tags} />
+          </div>
         </div>
-      </div>
-      <div className={classes.contactCTAContainer}>
-        <Button
-          variant="contained"
-          color="primary"
-          disableElevation
-          className={classes.contactCTA}
-        >
-          Contactez-moi
-        </Button>
-      </div>
-      <div className={classes.avatarContainer}>
-        <PhotographerAvatar
-          id={243}
-          name={name}
-          filename={portrait}
-          width={isSmallScreen ? 100 : 200}
-        />
-      </div>
-    </aside>
+        <div className={classes.contactCTAContainer}>
+          <Button
+            className={classes.contactCTA}
+            variant="contained"
+            color="primary"
+            onClick={handleOpenContactForm}
+            disableElevation
+          >
+            Contactez-moi
+          </Button>
+        </div>
+        <div className={classes.avatarContainer}>
+          <PhotographerAvatar
+            id={243}
+            name={name}
+            filename={portrait}
+            width={isSmallScreen ? 100 : 200}
+          />
+        </div>
+      </aside>
+      <ContactForm
+        title={`Contactez-moi ${photographer.name}`}
+        isOpen={isContactFormOpen}
+        handleClose={handleCloseContactForm}
+      />
+    </>
   );
 };
 
