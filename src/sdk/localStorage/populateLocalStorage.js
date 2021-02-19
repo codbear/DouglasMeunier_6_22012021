@@ -10,23 +10,21 @@ export default async function populateLocalStorage() {
       fromLocalStorage = JSON.parse(localStorage.getItem('likes'));
     }
 
-    reducedMedias = data.media.reduce((container, media) => {
+    reducedMedias = data.media.reduce((acc, media) => {
       const { photographerId, id } = media;
 
-      if (!container[photographerId]) {
-        // eslint-disable-next-line no-param-reassign
-        container[photographerId] = {};
+      if (!acc[photographerId]) {
+        acc[photographerId] = {};
       }
 
-      if (!container[photographerId][id]) {
-        // eslint-disable-next-line no-param-reassign
-        container[photographerId][id] = {
+      if (!acc[photographerId][id]) {
+        acc[photographerId][id] = {
           likes: media.likes,
           hasBeenLiked: false,
         };
       }
 
-      return container;
+      return acc;
     }, fromLocalStorage);
   } finally {
     table = { ...fromLocalStorage, ...reducedMedias };

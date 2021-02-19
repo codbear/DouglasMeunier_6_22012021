@@ -16,7 +16,6 @@ export default function mutateMediasMetadata(resourceId, subresourceId) {
     },
   };
 
-  localStorage.removeItem('likes');
   localStorage.setItem('likes', JSON.stringify(mutatedMedias));
 
   return mutatedMetadata;
