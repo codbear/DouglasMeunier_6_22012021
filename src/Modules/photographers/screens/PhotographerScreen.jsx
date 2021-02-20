@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { makeStyles } from '@material-ui/core';
 
@@ -79,6 +80,9 @@ const PhotographerScreen = () => {
       </header>
       {isPhotographerRequestSuccess && (
         <>
+          <Helmet>
+            <title>{`${photographer.name} - ${process.env.REACT_APP_SITE_TITLE}`}</title>
+          </Helmet>
           <main className={classes.main}>
             <section className={classes.photographerCard}>
               <PhotographerCardHorizontal photographer={photographer} />

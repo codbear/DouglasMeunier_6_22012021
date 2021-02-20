@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import { makeStyles, Typography } from '@material-ui/core';
 
@@ -71,6 +72,9 @@ const HomeScreen = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{`Nos photographes - ${process.env.REACT_APP_SITE_TITLE}`}</title>
+      </Helmet>
       <header className={classes.header}>
         <Banner
           tags={isTagsListRequestSuccess ? tagsList : []}
