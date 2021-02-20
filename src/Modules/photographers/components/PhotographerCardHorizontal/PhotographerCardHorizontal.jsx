@@ -18,19 +18,15 @@ const propTypes = {
 const useStyles = makeStyles(({ spacing, breakpoints, palette }) => ({
   card: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr',
+    gridTemplateColumns: '3fr 1fr',
     padding: spacing(2),
     [breakpoints.up('md')]: {
-      gridTemplateColumns: '2fr 1fr 1fr',
+      gridTemplateColumns: '1fr 1fr 1fr',
       columnGap: spacing(2),
       padding: spacing(6, 7),
     },
-    [breakpoints.up('lg')]: {
-      gridTemplateColumns: '1fr 1fr 1fr',
-    },
   },
   infos: {
-    flexGrow: 2,
     '& h1': {
       color: palette.text.tertiary,
     },
@@ -46,6 +42,7 @@ const useStyles = makeStyles(({ spacing, breakpoints, palette }) => ({
     right: 0,
     display: 'flex',
     zIndex: 100,
+    justifySelf: 'center',
     [breakpoints.up('md')]: {
       position: 'relative',
       display: 'block',

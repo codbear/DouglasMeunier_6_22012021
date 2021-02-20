@@ -21,9 +21,16 @@ const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
     marginTop: spacing(20),
   },
   photographerCard: {
+    margin: 'auto',
     [breakpoints.up('md')]: {
-      backgroundColor: palette.background.alternative,
-      margin: spacing(0, 12.5),
+      maxWidth: 900,
+      backgroundColor: palette.background.alternative.main,
+    },
+    [breakpoints.up('lg')]: {
+      maxWidth: 1200,
+    },
+    [breakpoints.up('xl')]: {
+      maxWidth: 1300,
     },
   },
   gallery: {
@@ -71,21 +78,21 @@ const PhotographerScreen = () => {
         <Banner />
       </header>
       {isPhotographerRequestSuccess && (
-        <main className={classes.main}>
-          <section className={classes.photographerCard}>
-            <PhotographerCardHorizontal photographer={photographer} />
-          </section>
-          {isMediasRequestSuccess && (
-          <section className={classes.gallery}>
-            <MediasCollection medias={medias} />
-          </section>
-          )}
-        </main>
-      )}
-      {isMediasRequestSuccess && (
-        <aside className={classes.statsSnackbarContainer}>
-          <StatsSnackbar likes={likes} price={photographer.price} />
-        </aside>
+        <>
+          <main className={classes.main}>
+            <section className={classes.photographerCard}>
+              <PhotographerCardHorizontal photographer={photographer} />
+            </section>
+            {isMediasRequestSuccess && (
+              <section className={classes.gallery}>
+                <MediasCollection medias={medias} />
+              </section>
+            )}
+          </main>
+          <aside className={classes.statsSnackbarContainer}>
+            <StatsSnackbar likes={likes} price={photographer.price} />
+          </aside>
+        </>
       )}
     </>
   );
