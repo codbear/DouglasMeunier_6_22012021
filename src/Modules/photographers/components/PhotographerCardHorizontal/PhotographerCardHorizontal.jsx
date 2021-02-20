@@ -15,8 +15,8 @@ const propTypes = {
   photographer: photographerPropTypes.isRequired,
 };
 
-const useStyles = makeStyles(({ spacing, breakpoints }) => ({
-  root: {
+const useStyles = makeStyles(({ spacing, breakpoints, palette }) => ({
+  card: {
     display: 'grid',
     gridTemplateColumns: '2fr 1fr',
     padding: spacing(2),
@@ -29,10 +29,13 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
       gridTemplateColumns: '1fr 1fr 1fr',
     },
   },
-  infoContainer: {
+  infos: {
     flexGrow: 2,
+    '& h1': {
+      color: palette.text.tertiary,
+    },
   },
-  tagsCloudContainer: {
+  tagsCloud: {
     display: 'flex',
     justifyContent: 'flex-start',
   },
@@ -83,12 +86,11 @@ const PhotographerCardHorizontal = ({
 
   return (
     <>
-      <aside className={classes.root}>
-        <div className={classes.infoContainer}>
+      <div className={classes.card}>
+        <div className={classes.infos}>
           <Typography
             variant="h2"
             component="h1"
-            color="secondary"
           >
             { name }
           </Typography>
@@ -100,7 +102,7 @@ const PhotographerCardHorizontal = ({
             name={name}
             variant="horizontal"
           />
-          <div className={classes.tagsCloudContainer}>
+          <div className={classes.tagsCloud}>
             <TagsCloud tags={tags} />
           </div>
         </div>
@@ -123,7 +125,7 @@ const PhotographerCardHorizontal = ({
             width={isSmallScreen ? 100 : 200}
           />
         </div>
-      </aside>
+      </div>
       <ContactForm
         title={`Contactez-moi ${photographer.name}`}
         isOpen={isContactFormOpen}

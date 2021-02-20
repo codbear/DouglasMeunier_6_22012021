@@ -16,13 +16,11 @@ const propTypes = {
 
 const defaultProps = {};
 
-const useStyles = makeStyles(({ spacing, palette }) => ({
-  root: {
-    padding: spacing(12.5, 0, 0, 2),
-  },
+const useStyles = makeStyles(({ spacing, palette, breakpoints }) => ({
   selectContainer: {
     display: 'flex',
     alignItems: 'center',
+    marginLeft: '10%',
   },
   select: {
     marginLeft: spacing(2),
@@ -30,11 +28,23 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
     color: palette.primary.contrastText,
   },
   mediasGrid: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    justifyContent: 'space-between',
+    display: 'grid',
+    placeContent: 'center',
+    gap: spacing(10),
+    gridTemplateColumns: 'repeat(1, 1fr)',
+    marginTop: spacing(7),
     '& article': {
-      margin: spacing(2, 2, 2, 0),
+      display: 'flex',
+      justifyContent: 'center',
+    },
+    [breakpoints.up('md')]: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+    [breakpoints.up('lg')]: {
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+    [breakpoints.up('xl')]: {
+      gridTemplateColumns: 'repeat(4, 1fr)',
     },
   },
 }));
@@ -77,7 +87,7 @@ const MediasCollection = ({ medias }) => {
   };
 
   return (
-    <section className={classes.root}>
+    <>
       <div className={classes.selectContainer}>
         <Typography>Trier par</Typography>
         <FormControl variant="outlined">
@@ -101,7 +111,7 @@ const MediasCollection = ({ medias }) => {
           </article>
         ))}
       </div>
-    </section>
+    </>
   );
 };
 

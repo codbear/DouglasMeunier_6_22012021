@@ -20,11 +20,14 @@ const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
   main: {
     marginTop: spacing(20),
   },
-  photographerCardContainer: {
+  photographerCard: {
     [breakpoints.up('md')]: {
       backgroundColor: palette.background.alternative,
       margin: spacing(0, 12.5),
     },
+  },
+  gallery: {
+    padding: spacing(12.5, 0),
   },
   statsSnackbarContainer: {
     display: 'none',
@@ -67,23 +70,23 @@ const PhotographerScreen = () => {
       <header className={classes.header}>
         <Banner />
       </header>
-      <main className={classes.main}>
-        {isPhotographerRequestSuccess && (
-          <>
-            <div className={classes.photographerCardContainer}>
-              <PhotographerCardHorizontal photographer={photographer} />
-            </div>
-            {isMediasRequestSuccess && (
-              <>
-                <MediasCollection medias={medias} />
-                <aside className={classes.statsSnackbarContainer}>
-                  <StatsSnackbar likes={likes} price={photographer.price} />
-                </aside>
-              </>
-            )}
-          </>
-        )}
-      </main>
+      {isPhotographerRequestSuccess && (
+        <main className={classes.main}>
+          <section className={classes.photographerCard}>
+            <PhotographerCardHorizontal photographer={photographer} />
+          </section>
+          {isMediasRequestSuccess && (
+          <section className={classes.gallery}>
+            <MediasCollection medias={medias} />
+          </section>
+          )}
+        </main>
+      )}
+      {isMediasRequestSuccess && (
+        <aside className={classes.statsSnackbarContainer}>
+          <StatsSnackbar likes={likes} price={photographer.price} />
+        </aside>
+      )}
     </>
   );
 };
