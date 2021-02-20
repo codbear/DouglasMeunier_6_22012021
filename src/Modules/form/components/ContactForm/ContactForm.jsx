@@ -1,11 +1,12 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Dialog, IconButton, Typography,
+  Button, Dialog, IconButton, Typography, useMediaQuery, useTheme,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
+import SuccessSnackbar from 'Modules/snackbar';
 import { validateField, isEmail, isRequired } from '../../services/validation';
 import TextInput from '../TextInput';
 import { formReducer, INITIAL_STATE } from '../../reducers';
@@ -85,6 +86,9 @@ const fields = [
 const ContactForm = ({ title, isOpen, handleClose }) => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -111,51 +115,66 @@ const ContactForm = ({ title, isOpen, handleClose }) => {
 
       // eslint-disable-next-line no-console
       console.log(formData);
+      handleClose();
+      setIsSnackbarOpen(true);
     }
   };
-  return (
-    <Dialog
-      open={isOpen}
-      onClose={handleClose}
-      aria-labelledby="formTitle"
-      PaperProps={{
-        className: classes.root,
-      }}
-    >
-      <div className={classes.header}>
-        <Typography variant="h3" component="h1" id="formTitle">
-          {title}
-        </Typography>
-        <IconButton
-          className={classes.closeButton}
-          onClick={handleClose}
-          aria-label="Fermer le formulaire de contact"
-        >
-          <CloseIcon fontSize="large" />
-        </IconButton>
-      </div>
-      <form onSubmit={handleSubmit} noValidate autoComplete="off">
-        {fields.map((field) => {
-          const { value, isError } = state[field.name];
 
-          return (
-            <div className={classes.formControl} key={field.name}>
-              <TextInput
-                type={field.type}
-                name={field.name}
-                label={field.label}
-                value={value}
-                error={isError ? field.errorMessage : undefined}
-                onChange={(newValue) => dispatch(field.setValue(newValue))}
-              />
-            </div>
-          );
-        })}
-        <Button variant="contained" type="submit" color="primary" size="large">
-          Envoyer
-        </Button>
-      </form>
-    </Dialog>
+  const handleSnackbarClose = () => {
+    setIsSnackbarOpen(false);
+  };
+
+  return (
+    <>
+      <Dialog
+        open={isOpen}
+        onClose={handleClose}
+        fullScreen={isSmallScreen}
+        aria-labelledby="formTitle"
+        PaperProps={{
+          className: classes.root,
+        }}
+      >
+        <div className={classes.header}>
+          <Typography variant="h3" component="h1" id="formTitle">
+            {title}
+          </Typography>
+          <IconButton
+            className={classes.closeButton}
+            onClick={handleClose}
+            aria-label="Fermer le formulaire de contact"
+          >
+            <CloseIcon fontSize="large" />
+          </IconButton>
+        </div>
+        <form onSubmit={handleSubmit} noValidate autoComplete="off">
+          {fields.map((field) => {
+            const { value, isError } = state[field.name];
+
+            return (
+              <div className={classes.formControl} key={field.name}>
+                <TextInput
+                  type={field.type}
+                  name={field.name}
+                  label={field.label}
+                  value={value}
+                  error={isError ? field.errorMessage : undefined}
+                  onChange={(newValue) => dispatch(field.setValue(newValue))}
+                />
+              </div>
+            );
+          })}
+          <Button variant="contained" type="submit" color="primary" size="large">
+            Envoyer
+          </Button>
+        </form>
+      </Dialog>
+      <SuccessSnackbar
+        isOpen={isSnackbarOpen}
+        handleClose={handleSnackbarClose}
+        message="Votre message a été envoyé"
+      />
+    </>
   );
 };
 

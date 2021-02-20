@@ -20,11 +20,12 @@ const defaultProps = {
   error: undefined,
 };
 
-const useStyles = makeStyles(({ palette }) => ({
+const useStyles = makeStyles(({ palette, spacing }) => ({
   input: {
     backgroundColor: palette.background.paper,
     borderRadius: 5,
     border: '3px solid transparent',
+    paddingLeft: spacing(1),
   },
   inputError: {
     borderColor: palette.error.main,
