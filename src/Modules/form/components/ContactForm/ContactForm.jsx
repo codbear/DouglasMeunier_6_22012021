@@ -113,6 +113,7 @@ const ContactForm = ({ title, isOpen, handleClose }) => {
 
       // eslint-disable-next-line no-console
       console.log(formData);
+      handleClose();
     }
   };
   return (
