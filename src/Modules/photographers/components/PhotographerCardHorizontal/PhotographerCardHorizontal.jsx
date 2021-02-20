@@ -15,24 +15,23 @@ const propTypes = {
   photographer: photographerPropTypes.isRequired,
 };
 
-const useStyles = makeStyles(({ spacing, breakpoints }) => ({
-  root: {
+const useStyles = makeStyles(({ spacing, breakpoints, palette }) => ({
+  card: {
     display: 'grid',
-    gridTemplateColumns: '2fr 1fr',
+    gridTemplateColumns: '3fr 1fr',
     padding: spacing(2),
     [breakpoints.up('md')]: {
-      gridTemplateColumns: '2fr 1fr 1fr',
+      gridTemplateColumns: '1fr 1fr 1fr',
       columnGap: spacing(2),
       padding: spacing(6, 7),
     },
-    [breakpoints.up('lg')]: {
-      gridTemplateColumns: '1fr 1fr 1fr',
+  },
+  infos: {
+    '& h1': {
+      color: palette.text.tertiary,
     },
   },
-  infoContainer: {
-    flexGrow: 2,
-  },
-  tagsCloudContainer: {
+  tagsCloud: {
     display: 'flex',
     justifyContent: 'flex-start',
   },
@@ -43,6 +42,7 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
     right: 0,
     display: 'flex',
     zIndex: 100,
+    justifySelf: 'center',
     [breakpoints.up('md')]: {
       position: 'relative',
       display: 'block',
@@ -83,12 +83,11 @@ const PhotographerCardHorizontal = ({
 
   return (
     <>
-      <aside className={classes.root}>
-        <div className={classes.infoContainer}>
+      <div className={classes.card}>
+        <div className={classes.infos}>
           <Typography
             variant="h2"
             component="h1"
-            color="secondary"
           >
             { name }
           </Typography>
@@ -100,7 +99,7 @@ const PhotographerCardHorizontal = ({
             name={name}
             variant="horizontal"
           />
-          <div className={classes.tagsCloudContainer}>
+          <div className={classes.tagsCloud}>
             <TagsCloud tags={tags} />
           </div>
         </div>
@@ -123,7 +122,7 @@ const PhotographerCardHorizontal = ({
             width={isSmallScreen ? 100 : 200}
           />
         </div>
-      </aside>
+      </div>
       <ContactForm
         title={`Contactez-moi ${photographer.name}`}
         isOpen={isContactFormOpen}

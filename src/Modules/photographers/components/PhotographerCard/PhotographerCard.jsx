@@ -14,7 +14,7 @@ const propTypes = {
   photographer: photographerPropTypes.isRequired,
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(({ palette }) => ({
   root: {
     width: 300,
   },
@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
   },
   name: {
     marginTop: 20,
+    color: palette.text.tertiary,
   },
   tagsCloudContainer: {
     display: 'flex',
@@ -55,7 +56,6 @@ const PhotographerCard = ({ photographer }) => {
         <Typography
           variant="h4"
           component="h2"
-          color="secondary"
           align="center"
           className={classes.name}
         >
