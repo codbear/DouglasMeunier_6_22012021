@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Button, Dialog, IconButton, Typography,
+  Button, Dialog, IconButton, Typography, useMediaQuery, useTheme,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
@@ -85,6 +85,8 @@ const fields = [
 const ContactForm = ({ title, isOpen, handleClose }) => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -117,6 +119,7 @@ const ContactForm = ({ title, isOpen, handleClose }) => {
     <Dialog
       open={isOpen}
       onClose={handleClose}
+      fullScreen={isSmallScreen}
       aria-labelledby="formTitle"
       PaperProps={{
         className: classes.root,
