@@ -8,7 +8,8 @@ const mediaPropTypes = PropTypes.shape({
   date: PropTypes.string,
   price: PropTypes.number,
   title: PropTypes.string,
-  source: PropTypes.string,
+  rootDir: PropTypes.string,
+  filename: PropTypes.string,
   component: PropTypes.string,
   hasBeenLiked: PropTypes.bool,
 });

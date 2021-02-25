@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardActions,
-  Button,
-  Typography,
+  Card, CardActionArea, CardMedia, CardActions, Button, Typography,
 } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 import { useLike } from 'sdk';
 
+import MEDIA_TYPE from 'Modules/medias/constants';
 import mediaPropTypes from '../../prop-types';
 
 const propTypes = {
   media: mediaPropTypes.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 const useStyles = makeStyles(({ spacing, breakpoints }) => ({
@@ -48,7 +46,7 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
 }));
 
 const MediaCard = ({
-  media,
+  media, onClick,
 }) => {
   const classes = useStyles();
   const [metadata, setMetadata] = useState(media);
@@ -58,13 +56,17 @@ const MediaCard = ({
     likes,
     price,
     title,
-    source,
+    rootDir,
+    filename,
     component,
     hasBeenLiked,
   } = metadata;
   const likesMutation = useLike(photographerId, id);
+  const source = component === MEDIA_TYPE.IMAGE
+    ? `${rootDir}/thumb_${filename}`
+    : `${rootDir}/${filename}`;
 
-  const handleClick = () => {
+  const handleClickOnFav = () => {
     likesMutation.mutate({}, {
       onSuccess: (data) => {
         setMetadata(data);
@@ -74,7 +76,7 @@ const MediaCard = ({
 
   return (
     <Card className={classes.root} elevation={0}>
-      <CardActionArea>
+      <CardActionArea onClick={onClick}>
         <CardMedia
           className={classes.media}
           src={source}
@@ -93,7 +95,7 @@ const MediaCard = ({
           { `${price} €` }
         </Typography>
         <Button
-          onClick={handleClick}
+          onClick={handleClickOnFav}
           color="primary"
           aria-label="likes"
           endIcon={hasBeenLiked ? (
