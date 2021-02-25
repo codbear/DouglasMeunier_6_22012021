@@ -9,6 +9,7 @@ import {
 import mediaPropTypes from '../../prop-types';
 import withMedia from '../../hoc/withMedia';
 import MediaCard from '../MediaCard';
+import Lightbox from '../Lightbox';
 
 const propTypes = {
   medias: PropTypes.arrayOf(mediaPropTypes).isRequired,
@@ -54,6 +55,8 @@ const MediaCardWithMedia = withMedia(MediaCard);
 const MediasCollection = ({ medias }) => {
   const classes = useStyles();
   const [orderProperty, setOrderProperty] = useState('likes');
+  const [isLightboxOpen, setIsLightBoxOpen] = useState(false);
+  const [clickedMedia, setClickedMedia] = useState(null);
 
   const orderBy = useCallback(
     (key) => {
@@ -86,6 +89,16 @@ const MediasCollection = ({ medias }) => {
     setOrderProperty(value);
   };
 
+  const handleLightBoxOpen = (mediaMetadata) => {
+    setIsLightBoxOpen(true);
+    setClickedMedia(mediaMetadata);
+  };
+
+  const handleLightBoxClose = () => {
+    setIsLightBoxOpen(false);
+    setClickedMedia(null);
+  };
+
   return (
     <>
       <div className={classes.selectContainer}>
@@ -107,10 +120,17 @@ const MediasCollection = ({ medias }) => {
           <article key={media.id}>
             <MediaCardWithMedia
               metadata={media}
+              onClick={() => handleLightBoxOpen(media)}
             />
           </article>
         ))}
       </div>
+      <Lightbox
+        isOpen={isLightboxOpen}
+        onClose={handleLightBoxClose}
+        medias={orderedMedias}
+        clickedMedia={clickedMedia}
+      />
     </>
   );
 };

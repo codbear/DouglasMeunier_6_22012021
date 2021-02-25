@@ -32,7 +32,7 @@ const PhotographerAvatar = ({
 
   return (
     <img
-      src={`/images/Avatar/thumbnails/${filename}`}
+      src={`/medias/Avatar/thumbnails/${filename}`}
       alt={alternativeLabel}
       className={classes.image}
       width={width}

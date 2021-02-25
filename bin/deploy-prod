@@ -1,0 +1,16 @@
+#!/bin/bash
+
+ssh codbear@codbear.com << 'eof'
+cd openclassrooms/project_6
+echo    " _________________________ "
+echo -e "| PULL MASTER FROM GITHUB |"
+echo    " _________________________ "
+git pull origin master
+echo    " ______________________ "
+echo -e "| INSTALL DEPENDENCIES |"
+echo    " ______________________ "
+npm install
+echo    " ____________ "
+echo -e "| MAKE BUILD |"
+echo    " ____________ "
+npm run build

@@ -8,11 +8,12 @@ const withMedia = (WrappedComponent) => {
     metadata: mediaPropTypes.isRequired,
   };
 
-  const WithMedia = ({ metadata }) => {
+  const WithMedia = ({ metadata, ...otherProps }) => {
     const media = mediaFactory(metadata);
 
     return (
-      <WrappedComponent media={media} />
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <WrappedComponent media={media} {...otherProps} />
     );
   };
 

@@ -10,7 +10,8 @@ export default class Media {
     this.price = metadata.price;
     this.title = metadata.title;
     this.component = MEDIA_TYPE.IMAGE;
-    this.source = '/images/placeholder.png';
+    this.rootDir = `/medias/Photographers/${metadata.photographerId}`;
+    this.filename = null;
     this.hasBeenLiked = metadata.hasBeenLiked;
   }
 }
