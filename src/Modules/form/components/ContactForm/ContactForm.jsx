@@ -7,11 +7,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 
 import SuccessSnackbar from 'Modules/snackbar';
-import { validateField, isEmail, isRequired } from '../../services/validation';
+import {
+  validateField, isEmail, isRequired, isName,
+} from '../../services/validation';
 import TextInput from '../TextInput';
 import { formReducer, INITIAL_STATE } from '../../reducers';
 import {
-  setEmail, setFirstName, setLastName, setMessage, toggleError,
+  setEmail, setFirstName, setLastName, setMessage, setError,
 } from '../../actions';
 
 const propTypes = {
@@ -48,22 +50,22 @@ const useStyles = makeStyles(({ spacing, palette }) => ({
   },
 }));
 
+const UCFirst = (string) => string[0].toUpperCase() + string.substring(1);
+
 const fields = [
   {
     name: 'firstName',
     type: 'text',
     label: 'Prénom',
-    setValue: setFirstName,
-    validators: [isRequired],
-    errorMessage: 'Veuillez renseigner votre prénom',
+    setValue: (value) => setFirstName(UCFirst(value)),
+    validators: [isRequired, isName],
   },
   {
     name: 'lastName',
     type: 'text',
     label: 'Nom',
-    setValue: setLastName,
-    validators: [isRequired],
-    errorMessage: 'Veuillez renseigner votre nom',
+    setValue: (value) => setLastName(UCFirst(value)),
+    validators: [isRequired, isName],
   },
   {
     name: 'email',
@@ -71,7 +73,6 @@ const fields = [
     label: 'Email',
     setValue: setEmail,
     validators: [isRequired, isEmail],
-    errorMessage: 'Veuillez renseigner votre email',
   },
   {
     name: 'message',
@@ -79,7 +80,6 @@ const fields = [
     label: 'Votre message',
     setValue: setMessage,
     validators: [isRequired],
-    errorMessage: 'Veuillez saisir un message',
   },
 ];
 
@@ -96,12 +96,12 @@ const ContactForm = ({ title, isOpen, handleClose }) => {
     let isFormValid = true;
 
     fields.forEach((field) => {
-      const isFieldValid = validateField(field.validators)(state[field.name].value);
-      dispatch(toggleError({
+      const error = validateField(field.validators)(state[field.name].value);
+      dispatch(setError({
         field: field.name,
-        isError: !isFieldValid,
+        error,
       }));
-      isFormValid = isFieldValid && isFormValid;
+      isFormValid = !error && isFormValid;
     });
 
     if (isFormValid) {
@@ -149,7 +149,7 @@ const ContactForm = ({ title, isOpen, handleClose }) => {
         </div>
         <form onSubmit={handleSubmit} noValidate autoComplete="off">
           {fields.map((field) => {
-            const { value, isError } = state[field.name];
+            const { value, error } = state[field.name];
 
             return (
               <div className={classes.formControl} key={field.name}>
@@ -158,7 +158,7 @@ const ContactForm = ({ title, isOpen, handleClose }) => {
                   name={field.name}
                   label={field.label}
                   value={value}
-                  error={isError ? field.errorMessage : undefined}
+                  error={error}
                   onChange={(newValue) => dispatch(field.setValue(newValue))}
                 />
               </div>

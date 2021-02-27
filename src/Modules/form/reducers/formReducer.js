@@ -3,19 +3,19 @@ import actionTypes from '../actions';
 const INITIAL_STATE = {
   firstName: {
     value: '',
-    isError: false,
+    error: '',
   },
   lastName: {
     value: '',
-    isError: false,
+    error: '',
   },
   email: {
     value: '',
-    isError: false,
+    error: '',
   },
   message: {
     value: '',
-    isError: false,
+    error: '',
   },
 };
 
@@ -57,12 +57,12 @@ const formReducer = (state, action) => {
         },
       };
 
-    case actionTypes.TOGGLE_ERROR:
+    case actionTypes.SET_ERROR:
       return {
         ...state,
         [action.payload.field]: {
           ...state[action.payload.field],
-          isError: action.payload.isError,
+          error: action.payload.error,
         },
       };
 
