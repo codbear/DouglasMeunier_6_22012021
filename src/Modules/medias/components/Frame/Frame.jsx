@@ -35,9 +35,8 @@ const Frame = ({ media }) => {
   const [status, setStatus] = useState(STATUS.LOADING);
   const [currentMedia, setCurrentMedia] = useState(media);
   const {
-    rootDir, filename, component, title,
+    source, component, title,
   } = currentMedia;
-  const source = `${rootDir}/${filename}`;
 
   useEffect(
     () => {
