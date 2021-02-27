@@ -1,12 +1,13 @@
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { request } from '../api';
 
-const useMedias = (photographerId) => {
+const useMedias = (photographerId, options) => {
   const route = `photographers/${photographerId}/medias`;
 
   return useQuery(
     ['photographer', photographerId, 'medias'],
     () => request(route),
+    options,
   );
 };
 
@@ -21,9 +22,16 @@ const useMedia = (photographerId, id) => {
 
 const useLike = (photographerId, id) => {
   const route = `photographers/${photographerId}/medias/${id}`;
+  const queryClient = useQueryClient();
+  const mediasQueryKey = ['photographer', photographerId, 'medias'];
 
   return useMutation(
     (payload) => request(route, 'PATCH', payload),
+    {
+      onSettled: () => {
+        queryClient.invalidateQueries(mediasQueryKey);
+      },
+    },
   );
 };
 
