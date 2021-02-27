@@ -6,8 +6,6 @@ import App from './App';
 populateLocalStorage();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   window.document.getElementById('root'),
 );

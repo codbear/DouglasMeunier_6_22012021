@@ -1,22 +1,49 @@
+const REGEX = {
+  EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]{2,5}$/,
+  NAME: /^[^\d@&"(§!)^$`<,;:=#_¨*%£>?./+\\{}€|~]{2,}$/,
+  EMPTY: /^[\s]*$/,
+};
+
 export const validateField = (validationArray) => (value) => {
-  let isValid = true;
+  let error;
 
   if (!validationArray) {
-    return isValid;
+    return error;
   }
 
   validationArray.some((validator) => {
-    isValid = validator(value);
-
-    return !isValid;
+    error = validator(value);
+    return !!error;
   });
 
-  return isValid;
+  return error;
 };
 
-export const isRequired = (value) => !!value;
+export const isRequired = (value) => {
+  const isEmpty = REGEX.EMPTY.test(value);
+
+  if (!value || isEmpty) {
+    return 'Ce champ est obligatoire.';
+  }
+  return undefined;
+};
 
 export const isEmail = (value) => {
-  const regex = /[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-  return regex.test(value);
+  const isValidEmail = REGEX.EMAIL.test(value);
+
+  if (!isValidEmail) {
+    return 'Veuillez entrer une adresse email valide.';
+  }
+
+  return undefined;
+};
+
+export const isName = (value) => {
+  const isValidName = REGEX.NAME.test(value);
+
+  if (!isValidName) {
+    return 'Veuillez entrer un nom valide.';
+  }
+
+  return undefined;
 };

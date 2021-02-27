@@ -20,7 +20,7 @@ export const setMessage = (value) => ({
   payload: value,
 });
 
-export const toggleError = ({ field, isError }) => ({
-  type: actionTypes.TOGGLE_ERROR,
-  payload: { field, isError },
+export const setError = ({ field, error }) => ({
+  type: actionTypes.SET_ERROR,
+  payload: { field, error },
 });
