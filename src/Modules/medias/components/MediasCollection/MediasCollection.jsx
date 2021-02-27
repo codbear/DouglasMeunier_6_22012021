@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -50,53 +50,42 @@ const useStyles = makeStyles(({ spacing, palette, breakpoints }) => ({
   },
 }));
 
+const orderObjectsByProperty = (key) => (a, b) => {
+  if (a[key] > b[key]) {
+    return 1;
+  }
+  if (a[key] < b[key]) {
+    return -1;
+  }
+
+  return 0;
+};
+
 const MediaCardWithMedia = withMedia(MediaCard);
 
 const MediasCollection = ({ medias }) => {
   const classes = useStyles();
   const [orderProperty, setOrderProperty] = useState('likes');
-  const [isLightboxOpen, setIsLightBoxOpen] = useState(false);
-  const [clickedMedia, setClickedMedia] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
+  const shouldRenderLightbox = lightboxIndex >= 0;
 
-  const orderBy = useCallback(
-    (key) => {
-      const orderDescendant = (comparator) => (a, b) => -comparator(a, b);
-
-      if (typeof medias[1][key] === 'number') {
-        return medias.sort(orderDescendant((a, b) => a[key] - b[key]));
-      }
-
-      return medias.sort((a, b) => {
-        if (a[key] > b[key]) {
-          return 1;
-        }
-        if (a[key] < b[key]) {
-          return -1;
-        }
-
-        return 0;
-      });
-    },
-    [medias],
-  );
-
-  const [orderedMedias, setOrderedMedias] = useState(orderBy(orderProperty));
+  const orderedMedias = orderProperty === 'likes'
+    ? medias.sort(orderObjectsByProperty(orderProperty)).reverse()
+    : medias.sort(orderObjectsByProperty(orderProperty));
 
   const handleChange = (event) => {
     const { value } = event.target;
 
-    setOrderedMedias(orderBy(value));
     setOrderProperty(value);
   };
 
-  const handleLightBoxOpen = (mediaMetadata) => {
-    setIsLightBoxOpen(true);
-    setClickedMedia(mediaMetadata);
+  const handleLightBoxOpen = (mediaId) => {
+    const mediaIndex = medias.findIndex((media) => media.id === mediaId);
+    setLightboxIndex(mediaIndex);
   };
 
   const handleLightBoxClose = () => {
-    setIsLightBoxOpen(false);
-    setClickedMedia(null);
+    setLightboxIndex(-1);
   };
 
   return (
@@ -120,17 +109,18 @@ const MediasCollection = ({ medias }) => {
           <article key={media.id}>
             <MediaCardWithMedia
               metadata={media}
-              onClick={() => handleLightBoxOpen(media)}
+              onClick={() => handleLightBoxOpen(media.id)}
             />
           </article>
         ))}
       </div>
-      <Lightbox
-        isOpen={isLightboxOpen}
-        onClose={handleLightBoxClose}
-        medias={orderedMedias}
-        clickedMedia={clickedMedia}
-      />
+      {shouldRenderLightbox && (
+        <Lightbox
+          onClose={handleLightBoxClose}
+          medias={orderedMedias}
+          index={lightboxIndex}
+        />
+      )}
     </>
   );
 };

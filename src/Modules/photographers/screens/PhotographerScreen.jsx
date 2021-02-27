@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
@@ -9,7 +9,7 @@ import { useMedias, usePhotographer } from 'sdk';
 import Banner from 'Modules/banner';
 import MediasCollection from 'Modules/medias';
 import PhotographerCardHorizontal from '../components/PhotographerCardHorizontal';
-import StatsSnackbar from '../components/StatsTip';
+import StatsSnackbar from '../components/StatsSnackbar';
 
 const useStyles = makeStyles(({ palette, spacing, breakpoints }) => ({
   header: {
@@ -53,25 +53,24 @@ const PhotographerScreen = () => {
   const classes = useStyles();
   const { id } = useParams();
   const [likes, setLikes] = useState(0);
-
   const {
     isSuccess: isPhotographerRequestSuccess,
     data: photographer,
-  } = usePhotographer(id);
+  } = usePhotographer(+id);
   const {
     isSuccess: isMediasRequestSuccess,
     data: medias,
-  } = useMedias(id);
-
-  useEffect(() => {
-    if (isMediasRequestSuccess) {
+  } = useMedias(+id, {
+    onSuccess: (data) => {
       let counter = 0;
-      medias.forEach((media) => {
+
+      data.forEach((media) => {
         counter += media.likes;
       });
+
       setLikes(counter);
-    }
-  }, [isMediasRequestSuccess, medias, setLikes]);
+    },
+  });
 
   return (
     <>

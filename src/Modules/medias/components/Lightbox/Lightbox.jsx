@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -14,15 +14,13 @@ import withMedia from '../../hoc';
 import Frame from '../Frame';
 
 const propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   medias: PropTypes.arrayOf(PropTypes.object).isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  clickedMedia: PropTypes.object,
+  index: PropTypes.number,
 };
 
 const defaultProps = {
-  clickedMedia: {},
+  index: null,
 };
 
 const useStyles = makeStyles(({ spacing, breakpoints }) => ({
@@ -87,46 +85,44 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
 const FrameWithMedia = withMedia(Frame);
 
 const Lightbox = ({
-  isOpen, onClose, medias, clickedMedia,
+  onClose, medias, index,
 }) => {
   const classes = useStyles();
-  const [currentMedia, setCurrentMedia] = useState(null);
-
-  useEffect(() => {
-    if (!currentMedia && clickedMedia) {
-      setCurrentMedia(clickedMedia);
-    }
-  }, [currentMedia, clickedMedia, setCurrentMedia]);
+  const [currentIndex, setCurrentIndex] = useState(index);
+  const [currentMedia, setCurrentMedia] = useState(medias[index]);
 
   const goToMedia = useCallback(
-    (index) => {
-      let newIndex = index;
+    (newIndex) => {
+      const lastIndex = medias.length - 1;
 
-      if (index < 0) {
-        newIndex = medias.length - 1;
-      } else if (index >= medias.length - 1) {
-        newIndex = 0;
+      if (newIndex < 0) {
+        setCurrentIndex(lastIndex);
+        setCurrentMedia(medias[lastIndex]);
+        return;
       }
 
+      if (newIndex >= lastIndex) {
+        setCurrentIndex(0);
+        setCurrentMedia(medias[0]);
+        return;
+      }
+
+      setCurrentIndex(newIndex);
       setCurrentMedia(medias[newIndex]);
     },
-    [
-      medias, setCurrentMedia,
-    ],
+    [medias],
   );
 
   const handleClose = () => {
-    onClose();
+    setCurrentIndex(null);
     setCurrentMedia(null);
   };
 
   const handlePrev = () => {
-    const currentIndex = medias.findIndex((media) => media.id === currentMedia.id);
     goToMedia(currentIndex - 1);
   };
 
   const handleNext = () => {
-    const currentIndex = medias.findIndex((media) => media.id === currentMedia.id);
     goToMedia(currentIndex + 1);
   };
 
@@ -143,8 +139,9 @@ const Lightbox = ({
 
   return (
     <Dialog
-      open={isOpen}
+      open={!!currentMedia}
       onClose={handleClose}
+      onExited={onClose}
       fullScreen
       onKeyUp={handleKeyUp}
       PaperProps={{

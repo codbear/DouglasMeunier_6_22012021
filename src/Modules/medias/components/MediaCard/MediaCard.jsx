@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -49,7 +49,6 @@ const MediaCard = ({
   media, onClick,
 }) => {
   const classes = useStyles();
-  const [metadata, setMetadata] = useState(media);
   const {
     id,
     photographerId,
@@ -60,18 +59,14 @@ const MediaCard = ({
     filename,
     component,
     hasBeenLiked,
-  } = metadata;
+  } = media;
   const likesMutation = useLike(photographerId, id);
   const source = component === MEDIA_TYPE.IMAGE
     ? `${rootDir}/thumb_${filename}`
     : `${rootDir}/${filename}`;
 
   const handleClickOnFav = () => {
-    likesMutation.mutate({}, {
-      onSuccess: (data) => {
-        setMetadata(data);
-      },
-    });
+    likesMutation.mutate({});
   };
 
   return (
