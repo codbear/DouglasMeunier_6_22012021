@@ -37,6 +37,7 @@ const useStyles = makeStyles(({ spacing, breakpoints }) => ({
   frame: {
     height: '100%',
     display: 'flex',
+    flexFlow: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
