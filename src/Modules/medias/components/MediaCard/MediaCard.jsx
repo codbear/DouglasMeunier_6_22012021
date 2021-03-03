@@ -10,7 +10,6 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 import { useLike } from 'sdk';
 
-import MEDIA_TYPE from 'Modules/medias/constants';
 import mediaPropTypes from '../../prop-types';
 
 const propTypes = {
@@ -55,15 +54,11 @@ const MediaCard = ({
     likes,
     price,
     title,
-    rootDir,
-    filename,
+    thumbSource,
     component,
     hasBeenLiked,
   } = media;
   const likesMutation = useLike(photographerId, id);
-  const source = component === MEDIA_TYPE.IMAGE
-    ? `${rootDir}/thumb_${filename}`
-    : `${rootDir}/${filename}`;
 
   const handleClickOnFav = () => {
     likesMutation.mutate({});
@@ -74,7 +69,7 @@ const MediaCard = ({
       <CardActionArea onClick={onClick}>
         <CardMedia
           className={classes.media}
-          src={source}
+          src={thumbSource}
           component={component}
           alt={title}
           title={title}

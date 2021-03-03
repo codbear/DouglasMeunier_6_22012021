@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import mediaPropTypes from '../../prop-types';
@@ -10,7 +11,7 @@ const propTypes = {
   media: mediaPropTypes.isRequired,
 };
 
-const useStyles = makeStyles(({ palette }) => ({
+const useStyles = makeStyles(({ palette, spacing }) => ({
   loader: {
     fill: palette.primary.main,
   },
@@ -21,6 +22,10 @@ const useStyles = makeStyles(({ palette }) => ({
     width: 'auto',
     maxHeight: '100%',
     maxWidth: '100%',
+  },
+  title: {
+    alignSelf: 'baseline',
+    marginTop: spacing(1),
   },
 }));
 
@@ -35,9 +40,8 @@ const Frame = ({ media }) => {
   const [status, setStatus] = useState(STATUS.LOADING);
   const [currentMedia, setCurrentMedia] = useState(media);
   const {
-    rootDir, filename, component, title,
+    source, component, title,
   } = currentMedia;
-  const source = `${rootDir}/${filename}`;
 
   useEffect(
     () => {
@@ -82,6 +86,14 @@ const Frame = ({ media }) => {
             onError={handleError}
           />
         )}
+      <Typography
+        className={status === STATUS.SUCCESS ? classes.title : classes.hidden}
+        variant="h6"
+        component="p"
+        color="primary"
+      >
+        { title }
+      </Typography>
     </>
   );
 };

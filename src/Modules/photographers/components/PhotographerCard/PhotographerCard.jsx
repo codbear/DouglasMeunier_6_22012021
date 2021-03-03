@@ -52,7 +52,10 @@ const PhotographerCard = ({ photographer }) => {
   return (
     <article className={classes.root}>
       <RouterLink to={targetUrl} className={classes.link}>
-        <PhotographerAvatar id={243} name={name} filename={portrait} />
+        <PhotographerAvatar
+          alternativeLabel={name}
+          filename={portrait}
+        />
         <Typography
           variant="h4"
           component="h2"

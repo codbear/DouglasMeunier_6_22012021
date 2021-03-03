@@ -80,7 +80,7 @@ const HomeScreen = () => {
           tags={isTagsListRequestSuccess ? tagsList : []}
         />
       </header>
-      <main>
+      <main id="mainContent">
         <div className={classes.titleGrid}>
           <Typography component="h1" variant="h4" color="primary" className={classes.title}>
             Nos photographes

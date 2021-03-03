@@ -4,14 +4,12 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 
 const propTypes = {
-  filename: PropTypes.string,
-  alternativeLabel: PropTypes.string,
+  filename: PropTypes.string.isRequired,
+  alternativeLabel: PropTypes.string.isRequired,
   width: PropTypes.number,
 };
 
 const defaultProps = {
-  filename: 'placeholder.png',
-  alternativeLabel: 'Avatar',
   width: 200,
 };
 
