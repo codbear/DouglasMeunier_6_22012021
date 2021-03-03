@@ -116,8 +116,7 @@ const PhotographerCardHorizontal = ({
         </div>
         <div className={classes.avatarContainer}>
           <PhotographerAvatar
-            id={243}
-            name={name}
+            alternativeLabel={name}
             filename={portrait}
             width={isSmallScreen ? 100 : 200}
           />

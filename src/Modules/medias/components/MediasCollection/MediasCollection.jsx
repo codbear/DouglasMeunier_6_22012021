@@ -91,12 +91,13 @@ const MediasCollection = ({ medias }) => {
   return (
     <>
       <div className={classes.selectContainer}>
-        <Typography>Trier par</Typography>
+        <Typography id="orderBy">Trier par</Typography>
         <FormControl variant="outlined">
           <Select
             value={orderProperty}
             onChange={handleChange}
             className={classes.select}
+            labelId="orderBy"
           >
             <MenuItem value="likes">Popularité</MenuItem>
             <MenuItem value="date">Date</MenuItem>

@@ -82,7 +82,7 @@ const PhotographerScreen = () => {
           <Helmet>
             <title>{`${photographer.name} - ${process.env.REACT_APP_SITE_TITLE}`}</title>
           </Helmet>
-          <main className={classes.main}>
+          <main className={classes.main} id="mainContent">
             <section className={classes.photographerCard}>
               <PhotographerCardHorizontal photographer={photographer} />
             </section>

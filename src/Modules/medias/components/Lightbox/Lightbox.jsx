@@ -147,12 +147,14 @@ const Lightbox = ({
       onKeyUp={handleKeyUp}
       PaperProps={{
         className: classes.root,
+        'aria-label': 'Image plein écran',
       }}
     >
       <div className={classNames(classes.nav, classes.navLeft)}>
         <IconButton
           className={classes.navButton}
           onClick={handlePrev}
+          aria-label="Image précédent"
         >
           <ChevronLeftIcon
             className={classes.icon}
@@ -171,6 +173,7 @@ const Lightbox = ({
         <IconButton
           className={classes.navButton}
           onClick={handleNext}
+          aria-label="Image suivante"
         >
           <ChevronRightIcon
             className={classes.icon}
@@ -180,6 +183,7 @@ const Lightbox = ({
         <IconButton
           className={classNames(classes.navButton, classes.navClose)}
           onClick={handleClose}
+          aria-label="Fermer la vue image"
         >
           <CloseIcon
             className={classes.icon}
