@@ -18,10 +18,6 @@ const defaultProps = {
 };
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
-  root: {
-    position: 'relative',
-    width: '100%',
-  },
   banner: {
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
@@ -74,7 +70,7 @@ const Banner = ({ tags }) => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <>
       <div className={classes.skip}>
         <Button
           component="a"
@@ -96,7 +92,7 @@ const Banner = ({ tags }) => {
         </div>
         )}
       </div>
-    </div>
+    </>
   );
 };
 
