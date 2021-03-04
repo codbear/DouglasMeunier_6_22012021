@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  FormControl,
+  FormControl, InputLabel,
   makeStyles, MenuItem, Select, Typography,
 } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import mediaPropTypes from '../../prop-types';
 import withMedia from '../../hoc/withMedia';
@@ -27,6 +28,29 @@ const useStyles = makeStyles(({ spacing, palette, breakpoints }) => ({
     marginLeft: spacing(2),
     backgroundColor: palette.primary.main,
     color: palette.primary.contrastText,
+    width: 130,
+  },
+  paper: {
+    width: 130,
+  },
+  icon: {
+    color: palette.primary.contrastText,
+    right: 5,
+    position: 'absolute',
+    userSelect: 'none',
+    pointerEvents: 'none',
+  },
+  list: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    backgroundColor: palette.primary.main,
+    '& li': {
+      color: palette.primary.contrastText,
+      margin: spacing(0, 1),
+      '&:not(:last-of-type)': {
+        borderBottom: `1px solid ${palette.primary.contrastText}`,
+      },
+    },
   },
   mediasGrid: {
     display: 'grid',
@@ -91,13 +115,24 @@ const MediasCollection = ({ medias }) => {
   return (
     <>
       <div className={classes.selectContainer}>
-        <Typography id="orderBy">Trier par</Typography>
+        <InputLabel htmlFor="orderBy">
+          <Typography>Trier par</Typography>
+        </InputLabel>
         <FormControl variant="outlined">
           <Select
             value={orderProperty}
             onChange={handleChange}
             className={classes.select}
-            labelId="orderBy"
+            IconComponent={() => (<ExpandMoreIcon className={classes.icon} />)}
+            MenuProps={{
+              classes: {
+                paper: classes.paper,
+                list: classes.list,
+              },
+            }}
+            inputProps={{
+              id: 'orderBy',
+            }}
           >
             <MenuItem value="likes">Popularité</MenuItem>
             <MenuItem value="date">Date</MenuItem>

@@ -66,13 +66,12 @@ const MediaCard = ({
 
   return (
     <Card className={classes.root} elevation={0}>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea onClick={onClick} aria-label={`${title}, vue plein écran`}>
         <CardMedia
           className={classes.media}
           src={thumbSource}
           component={component}
-          alt={title}
-          title={title}
+          alt=""
         />
       </CardActionArea>
       <CardActions className={classes.cardActions}>
@@ -87,7 +86,7 @@ const MediaCard = ({
         <Button
           onClick={handleClickOnFav}
           color="primary"
-          aria-label="likes"
+          aria-label="J'aime"
           endIcon={hasBeenLiked ? (
             <FavoriteIcon />
           ) : (
