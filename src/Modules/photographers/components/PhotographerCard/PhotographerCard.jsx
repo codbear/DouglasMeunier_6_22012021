@@ -53,7 +53,6 @@ const PhotographerCard = ({ photographer }) => {
     <article className={classes.root}>
       <RouterLink to={targetUrl} className={classes.link}>
         <PhotographerAvatar
-          alternativeLabel={name}
           filename={portrait}
         />
         <Typography

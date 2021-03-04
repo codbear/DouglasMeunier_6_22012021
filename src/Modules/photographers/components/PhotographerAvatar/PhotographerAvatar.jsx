@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core';
 
 const propTypes = {
   filename: PropTypes.string.isRequired,
-  alternativeLabel: PropTypes.string.isRequired,
   width: PropTypes.number,
 };
 
@@ -24,14 +23,14 @@ const useStyles = makeStyles(({ palette }) => ({
 }));
 
 const PhotographerAvatar = ({
-  filename, alternativeLabel, width,
+  filename, width,
 }) => {
   const classes = useStyles();
 
   return (
     <img
       src={`/medias/Avatar/thumbnails/${filename}`}
-      alt={alternativeLabel}
+      alt=""
       className={classes.image}
       width={width}
       height={width}
