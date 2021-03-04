@@ -54,6 +54,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    zIndex: -1,
     '& a': {
       position: 'relative',
       top: 9,
