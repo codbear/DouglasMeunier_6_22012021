@@ -17,13 +17,13 @@ const useStyles = makeStyles(({ palette, spacing }) => ({
     margin: spacing(0, 0.5, 0.5, 0),
     backgroundColor: palette.background.paper,
     border: `1px solid ${palette.border}`,
-    borderRadius: 11,
+    borderRadius: 15,
     padding: '3px 6px',
     color: palette.primary.main,
     fontWeight: 500,
   },
   isActive: {
-    backgroundColor: palette.background.primary,
+    backgroundColor: palette.primary.main,
     color: palette.primary.contrastText,
   },
 }));
