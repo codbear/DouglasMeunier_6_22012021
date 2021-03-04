@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  FormControl, InputLabel,
-  makeStyles, MenuItem, Select, Typography,
+  FormControl, makeStyles, MenuItem, Select, Typography,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -115,9 +114,7 @@ const MediasCollection = ({ medias }) => {
   return (
     <>
       <div className={classes.selectContainer}>
-        <InputLabel htmlFor="orderBy">
-          <Typography>Trier par</Typography>
-        </InputLabel>
+        <Typography id="orderBy">Trier par</Typography>
         <FormControl variant="outlined">
           <Select
             value={orderProperty}
@@ -130,9 +127,7 @@ const MediasCollection = ({ medias }) => {
                 list: classes.list,
               },
             }}
-            inputProps={{
-              id: 'orderBy',
-            }}
+            aria-labelledby="orderBy"
           >
             <MenuItem value="likes">Popularité</MenuItem>
             <MenuItem value="date">Date</MenuItem>

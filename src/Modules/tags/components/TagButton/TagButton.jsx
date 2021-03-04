@@ -41,6 +41,7 @@ const TagButton = ({ label, isActive, targetUrl }) => {
           [classes.isActive]: isActive,
         },
       )}
+      aria-label={`Tag ${label}`}
     >
       { formattedLabel }
     </RouterLink>
